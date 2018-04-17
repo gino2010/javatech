@@ -27,4 +27,3 @@ If you have good idea for Java tech, please let me know.
 
 ### License
 The project is released under the terms of the MIT.
-@ginozhao2010
