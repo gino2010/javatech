@@ -13,4 +13,9 @@ public class SubjectImpl implements Subject {
         log.info("hello: " + str);
         return true;
     }
+
+    private Boolean myHello(String str) {
+        log.info("private hello: " + str);
+        return true;
+    }
 }
