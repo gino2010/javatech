@@ -8,6 +8,8 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
+ * cglib proxy
+ *
  * @author gino
  * Created on 2018/4/17
  */

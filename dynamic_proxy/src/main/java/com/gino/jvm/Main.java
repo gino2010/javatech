@@ -2,8 +2,10 @@ package com.gino.jvm;
 
 import com.gino.jvm.model.Subject;
 import com.gino.jvm.model.SubjectImpl;
+import com.gino.jvm.proxy.AssistProxy;
 import com.gino.jvm.proxy.CglibProxy;
 import com.gino.jvm.proxy.DynamicProxy;
+import javassist.util.proxy.ProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.beans.BeanGenerator;
 
@@ -21,7 +23,15 @@ import java.lang.reflect.Proxy;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
-        // java dynamic proxy
+
+        callJdkProxy();
+        callCglibProxy();
+        callJavassistProxy();
+        // tryBeanGenerator();
+    }
+
+    // java dynamic proxy
+    private static void callJdkProxy() {
         log.info("-----jdk proxy-----");
         Subject subject = new SubjectImpl();
         InvocationHandler handler = new DynamicProxy(subject);
@@ -29,13 +39,15 @@ public class Main {
         log.info(subject.getClass().getName());
         Boolean result = subject.hello("jdk proxy");
         log.info("return result:{}", result);
+    }
 
-        // cglib dynamic proxy
+    // cglib dynamic proxy
+    private static void callCglibProxy() {
         log.info("-----cglib-----");
         CglibProxy proxy = new CglibProxy();
-        subject = (SubjectImpl) proxy.getProxy(SubjectImpl.class);
+        Subject subject = (SubjectImpl) proxy.getProxy(SubjectImpl.class);
         log.info(subject.getClass().getName());
-        result = subject.hello("cglib proxy");
+        Boolean result = subject.hello("cglib proxy");
         log.info("return result:{}", result);
 
         // cglib dynamic proxy object reflect private method, not call intercept method
@@ -48,8 +60,23 @@ public class Main {
         } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
 
-        // 和预想的有出入，getter没有正确返回
+    private static void callJavassistProxy() {
+        log.info("-----Javassist-----");
+        AssistProxy proxy = new AssistProxy();
+        try {
+            Subject subject = (SubjectImpl) proxy.getProxy(SubjectImpl.class);
+            log.info(subject.getClass().getName());
+            Boolean result = subject.hello("javassist");
+            log.info("return result:{}", result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 和预想的有出入，getter没有正确返回
+    private static void tryBeanGenerator() {
         // TODO: 2018/4/17 还需要调整
         BeanGenerator beanGenerator = new BeanGenerator();
         beanGenerator.addProperty("name", String.class);

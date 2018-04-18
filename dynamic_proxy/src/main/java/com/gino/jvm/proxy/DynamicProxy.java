@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
+ * jdk proxy
+ *
  * @author gino
  * Created on 2018/4/17
  */
