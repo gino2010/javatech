@@ -2,19 +2,19 @@ package com.gino.thread.model;
 
 /**
  * @author gino
- * Created on 2018/4/18
+ * Created on 2018/4/19
  */
-public class NotSafeSubject implements Subject {
+public class SafeSubjectOne implements Subject {
     private long count = 0;
     private StringBuilder builder = new StringBuilder();
 
     @Override
-    public void addCount() {
+    public synchronized void addCount() {
         this.count++;
     }
 
     @Override
-    public void addString() {
+    public synchronized void addString() {
         this.builder.append("T");
     }
 

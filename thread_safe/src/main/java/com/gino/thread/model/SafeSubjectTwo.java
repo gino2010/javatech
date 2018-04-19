@@ -1,16 +1,18 @@
 package com.gino.thread.model;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * @author gino
- * Created on 2018/4/18
+ * Created on 2018/4/19
  */
-public class NotSafeSubject implements Subject {
-    private long count = 0;
-    private StringBuilder builder = new StringBuilder();
+public class SafeSubjectTwo implements Subject {
+    private AtomicLong count = new AtomicLong();
+    private StringBuffer builder = new StringBuffer();
 
     @Override
     public void addCount() {
-        this.count++;
+        this.count.incrementAndGet();
     }
 
     @Override
@@ -20,7 +22,7 @@ public class NotSafeSubject implements Subject {
 
     @Override
     public long getCount() {
-        return count;
+        return count.get();
     }
 
     @Override
