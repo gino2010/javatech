@@ -17,10 +17,13 @@ import java.util.concurrent.*;
 @Slf4j
 public class Main {
     public static void main(String[] args) {
+        ThreadFactory namedThreadFactory;
+        ExecutorService threadPoolExecutor;
         // 做10次测试 do 10 tests
         int testTimes = 10;
-        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("not-safe-%d").build();
-        ExecutorService threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
+
+        namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("not-safe-%d").build();
+        threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
         // not thread safe
         for (int i = 0; i < testTimes; i++) {

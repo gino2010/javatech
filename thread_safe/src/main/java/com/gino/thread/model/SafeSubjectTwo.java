@@ -3,11 +3,15 @@ package com.gino.thread.model;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * 线程安全类型 Thread-Safe Type
+ *
  * @author gino
  * Created on 2018/4/19
  */
 public class SafeSubjectTwo implements Subject {
+    // CPU级别的CAS指令 CPU-level CAS instructions, best performance
     private AtomicLong count = new AtomicLong();
+    // Thread-safe type also use synchronized keyword than you can find it in source code
     private StringBuffer builder = new StringBuffer();
 
     @Override

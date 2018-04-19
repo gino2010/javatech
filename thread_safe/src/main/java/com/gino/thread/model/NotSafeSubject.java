@@ -1,6 +1,8 @@
 package com.gino.thread.model;
 
 /**
+ * Not Thread Safe
+ *
  * @author gino
  * Created on 2018/4/18
  */
