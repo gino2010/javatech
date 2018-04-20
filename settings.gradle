@@ -1,3 +1,4 @@
 rootProject.name = 'javatech'
 include 'dynamic_proxy'
 include 'thread_safe'
+include 'answer'
