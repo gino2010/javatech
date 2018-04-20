@@ -1,5 +1,3 @@
-package com.gino.thread;
-
 import com.gino.thread.model.NotSafeSubject;
 import com.gino.thread.model.SafeSubjectOne;
 import com.gino.thread.model.SafeSubjectTwo;
@@ -7,21 +5,29 @@ import com.gino.thread.model.Subject;
 import com.gino.thread.runnable.MyRunnable;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.concurrent.*;
 
 /**
+ * UnitTest
+ *
  * @author gino
- * Created on 2018/4/18
+ * Created on 2018/4/20
  */
 @Slf4j
-public class Main {
-    public static void main(String[] args) {
-        ThreadFactory namedThreadFactory;
-        ExecutorService threadPoolExecutor;
-        // 做10次测试 do 10 tests
-        int testTimes = 10;
+@RunWith(JUnit4.class)
+public class UnitTest {
+    ThreadFactory namedThreadFactory;
+    ExecutorService threadPoolExecutor;
+    // 做10次测试 do 10 tests
+    int testTimes = 10;
 
+    @Test
+    public void testNotSafe() {
+        log.info("---------------------------Not Safe-----------------------------");
         namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("not-safe-%d").build();
         threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
@@ -32,9 +38,11 @@ public class Main {
         threadPoolExecutor.shutdown();
         while (!threadPoolExecutor.isTerminated()) {
         }
+    }
 
-        log.info("-------------------------------------------------------------");
-
+    @Test
+    public void testSafeOne() {
+        log.info("---------------------------Safe One-----------------------------");
         namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("safe-one-%d").build();
         threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
@@ -46,9 +54,11 @@ public class Main {
 
         while (!threadPoolExecutor.isTerminated()) {
         }
+    }
 
-        log.info("-------------------------------------------------------------");
-
+    @Test
+    public void testSafeTwo() {
+        log.info("---------------------------Safe Two-----------------------------");
         namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("safe-two-%d").build();
         threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
@@ -57,7 +67,6 @@ public class Main {
             threadPoolExecutor.execute(() -> threadCall(new SafeSubjectTwo()));
         }
         threadPoolExecutor.shutdown();
-
     }
 
     private static void threadCall(Subject subject) {
