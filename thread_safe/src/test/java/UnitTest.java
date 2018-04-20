@@ -1,7 +1,4 @@
-import com.gino.thread.model.NotSafeSubject;
-import com.gino.thread.model.SafeSubjectOne;
-import com.gino.thread.model.SafeSubjectTwo;
-import com.gino.thread.model.Subject;
+import com.gino.thread.model.*;
 import com.gino.thread.runnable.MyRunnable;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +17,10 @@ import java.util.concurrent.*;
 @Slf4j
 @RunWith(JUnit4.class)
 public class UnitTest {
-    ThreadFactory namedThreadFactory;
-    ExecutorService threadPoolExecutor;
+    private ThreadFactory namedThreadFactory;
+    private ExecutorService threadPoolExecutor;
     // 做10次测试 do 10 tests
-    int testTimes = 10;
+    private int testTimes = 10;
 
     @Test
     public void testNotSafe() {
@@ -99,4 +96,69 @@ public class UnitTest {
                 subject.getCount() == threadsNum * MyRunnable.subTimes
                         && subject.getString().length() == threadsNum * MyRunnable.subTimes);
     }
+
+    volatile boolean safeIsRunning = true;
+
+    // 很难停止 hard to stop, 如果debug可以正常停止 if debug this code, it can be stopped.
+    // 原因在于listen thread 无法即时获得counter的变化
+    // The reason is that listen thread can not get counter changes immediately
+    @Test
+    public void testNotVolatile() {
+        VolatileSubject subject = new VolatileSubject();
+        Thread runThread = new Thread(() -> {
+            while (safeIsRunning) {
+                subject.addCounter();
+            }
+            log.info("subject stop at: {}", subject.getCounter());
+        });
+
+        Thread listenThread = new Thread(() -> {
+            while (true) {
+                if (subject.getCounter() > 50) {
+                    safeIsRunning = false;
+                    break;
+                }
+            }
+        });
+
+        try {
+            runThread.start();
+            listenThread.start();
+            runThread.join();
+            listenThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 正常停止 normal stop, 并且counter不会比50大太多 counter will not much more than 50
+    @Test
+    public void testVolatile() {
+        VolatileSubject subject = new VolatileSubject();
+        Thread runThread = new Thread(() -> {
+            while (safeIsRunning) {
+                subject.addSafeCounter();
+            }
+            log.info("subject stop at: {}", subject.getSafeCounter());
+        });
+
+        Thread listenThread = new Thread(() -> {
+            while (true) {
+                if (subject.getSafeCounter() > 50) {
+                    safeIsRunning = false;
+                    break;
+                }
+            }
+        });
+
+        try {
+            runThread.start();
+            listenThread.start();
+            runThread.join();
+            listenThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
