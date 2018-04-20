@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created on 2018/4/19
  */
 public class SafeSubjectTwo implements Subject {
-    // CPU级别的CAS指令 CPU-level CAS instructions, best performance
+    // CPU级别的CAS指令 CPU-level CAS instruction, best performance
     private AtomicLong count = new AtomicLong();
     // Thread-safe type also use synchronized keyword that you can find it in source code
     private StringBuffer builder = new StringBuffer();
