@@ -1,8 +1,8 @@
 # Answer
-This project is for one pre-interview test. Maybe move this project later.
+This project is for one pre-interview test. Maybe move this project to other project later.
 
 ### Function
-Base on a custom doubly lined list, implement a function to reverse list. 
+Base on a custom doubly linked list, implement a function to reverse list. 
 
 ### Development Environment
 - idea
@@ -11,7 +11,7 @@ Base on a custom doubly lined list, implement a function to reverse list.
 - mac os x
 
 ### Tips
-If you run unit test in idea, and get error message: working directory does not exist.
-You can fix it following below steps:
+If you run unit test in idea and get error message: working directory does not exist.
+You can fix it following the steps below:
 - open Run/Debug configurations and find your test configuration
 - clean working directory and save
