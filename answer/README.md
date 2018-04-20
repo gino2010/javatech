@@ -1,13 +1,13 @@
 # Answer
-This project is for one pre-interview test. Maybe move this project to other project later.
+This project is for one pre-interview test. Maybe move this project to another later.
 
 ### Function
 Base on a custom doubly linked list, implement a function to reverse list. 
 
 ### Development Environment
-- idea
-- gradle 4.6
 - jdk 1.8
+- gradle 4.6
+- idea
 - mac os x
 
 ### Tips
