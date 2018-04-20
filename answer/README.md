@@ -14,4 +14,4 @@ Base on a custom doubly linked list, implement a function to reverse list.
 If you run unit test in idea and get error message: working directory does not exist.
 You can fix it following the steps below:
 - open Run/Debug configurations and find your test configuration
-- clean working directory and save
+- Empty working directory and save
