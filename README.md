@@ -5,10 +5,10 @@
 
 This project for my Java re-learning record
 
-使用Java多年来并没有形成良好的知识体系架构，希望可以通过维护此工程将自己的Java技术进行强化和梳理
+使用Java多年来并没有形成良好的基础知识体系，希望可以通过维护此工程将自己的Java技术进行强化和梳理
 不仅在Java应用开发，也在Java基础底层技术加以练习
 
-I have used Java for many years, but not have formed a good knowledge architecture in this area.
+I have used Java for many years, but not have formed a good foundation of knowledge in this area.
 I hope that I can strengthen and sort my own Java technology by maintaining this project.
 Not only in Java application development but also in Java foundational technology like JVM.
 
