@@ -26,8 +26,10 @@ public class UnitTest {
     public void testNotSafe() {
         log.info("---------------------------Not Safe-----------------------------");
         namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("not-safe-%d").build();
-        threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+        // threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
+        //         new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+        // same as above
+        threadPoolExecutor = Executors.newFixedThreadPool(testTimes, namedThreadFactory);
         // not thread safe
         for (int i = 0; i < testTimes; i++) {
             threadPoolExecutor.execute(() -> threadCall(new NotSafeSubject()));
@@ -41,8 +43,7 @@ public class UnitTest {
     public void testSafeOne() {
         log.info("---------------------------Safe One-----------------------------");
         namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("safe-one-%d").build();
-        threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+        threadPoolExecutor = Executors.newFixedThreadPool(testTimes, namedThreadFactory);
         // thread safe
         for (int i = 0; i < testTimes; i++) {
             threadPoolExecutor.execute(() -> threadCall(new SafeSubjectOne()));
@@ -57,8 +58,7 @@ public class UnitTest {
     public void testSafeTwo() {
         log.info("---------------------------Safe Two-----------------------------");
         namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("safe-two-%d").build();
-        threadPoolExecutor = new ThreadPoolExecutor(testTimes, testTimes, 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+        threadPoolExecutor = Executors.newFixedThreadPool(testTimes, namedThreadFactory);
         // thread safe
         for (int i = 0; i < testTimes; i++) {
             threadPoolExecutor.execute(() -> threadCall(new SafeSubjectTwo()));

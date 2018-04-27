@@ -1,6 +1,5 @@
 package com.gino.thread.runnable;
 
-import com.gino.thread.model.NotSafeSubject;
 import com.gino.thread.model.Subject;
 import lombok.extern.slf4j.Slf4j;
 
