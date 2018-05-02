@@ -5,7 +5,6 @@ import com.gino.jvm.model.SubjectImpl;
 import com.gino.jvm.proxy.AssistProxy;
 import com.gino.jvm.proxy.CglibProxy;
 import com.gino.jvm.proxy.DynamicProxy;
-import javassist.util.proxy.ProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.beans.BeanGenerator;
 
