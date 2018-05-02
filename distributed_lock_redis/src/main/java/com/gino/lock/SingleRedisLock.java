@@ -25,6 +25,7 @@ public class SingleRedisLock {
 
     private static JedisPool jedisPool;
 
+    // initial configuration from properties file
     static {
         ClassLoader classLoader = SingleRedisLock.class.getClassLoader();
         JedisPoolConfig config = new JedisPoolConfig();
@@ -49,6 +50,14 @@ public class SingleRedisLock {
         }
     }
 
+    /**
+     * Get Lock
+     *
+     * @param lockName   lock name
+     * @param tryTimeout try to get lock timeout，if timeout, give up trying
+     * @param keyExpire  lock expire time
+     * @return get lock return uuid or not get lock return null
+     */
     public static String getLock(String lockName, long tryTimeout, long keyExpire) {
         Jedis resource = jedisPool.getResource();
         String uuid = UUID.randomUUID().toString();
@@ -73,25 +82,40 @@ public class SingleRedisLock {
         return null;
     }
 
+    /**
+     * release lock
+     *
+     * @param lockName lock name
+     * @param uuid     uuid returned when got lock
+     * @return true or false
+     */
     public static boolean releaseLock(String lockName, String uuid) {
         Jedis resource = jedisPool.getResource();
         String lockKey = PREFIX + lockName;
         boolean retFlag = false;
 
-        resource.watch(lockKey);
-        if (uuid.equals(resource.get(lockKey))) {
-            Transaction multi = resource.multi();
-            Response<Long> del = multi.del(lockKey);
-            multi.exec();
-            if (del.get() == 1) {
-                log.info("Release lock, uuid: {}", uuid);
-                retFlag = true;
-            } else {
-                log.info("Release lock, failed!");
+        try {
+            resource.watch(lockKey);
+            if (uuid.equals(resource.get(lockKey))) {
+                Transaction multi = resource.multi();
+                Response<Long> del = multi.del(lockKey);
+                multi.exec();
+                if (del.get() == 1) {
+                    log.info("Release lock, uuid: {}", uuid);
+                    retFlag = true;
+                } else {
+                    log.info("Release lock, failed!");
+                }
+                multi.close();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("Release lock, get error, failed!");
+        } finally {
+            resource.unwatch();
+            resource.close();
         }
-        resource.unwatch();
-        resource.close();
+
         return retFlag;
     }
 }

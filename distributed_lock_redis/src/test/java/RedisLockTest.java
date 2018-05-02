@@ -24,7 +24,7 @@ public class RedisLockTest {
         ExecutorService executorService = Executors.newFixedThreadPool(50);
         for (int i = 0; i < 50; i++) {
             executorService.execute(() -> {
-                String uuid = SingleRedisLock.getLock(lockName, 1000, 100);
+                String uuid = SingleRedisLock.getLock(lockName, 500, 50);
                 if (uuid != null) {
                     shared++;
                     SingleRedisLock.releaseLock(lockName, uuid);
