@@ -3,11 +3,11 @@
 
 分布式锁的实现方式主要有三种：
 
-There are three main ways to implement distributed locks:
-
 - 数据库方式，基于主键唯一性约束实现或行级锁实现
 - Redis方式，基于setNX操作实现
 - Zookeeper实现
+
+There are three main ways to implement distributed locks:
 
 - Database way, implementation base on the uniqueness of primary key or row-level locks
 - Redis way, implementation base on sexNX command
