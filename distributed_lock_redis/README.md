@@ -22,9 +22,11 @@ So, this project chooses Redis way as the beginning of practicing distributed lo
 ### Why use it
 
 简单的说，分布式锁用于多处理过程竞争共享资源时使用，从而保证在一个时刻只有一个处理过程在操作共享资源，避免冲突。
+目的类似于线程锁，但它是用于协调多个服务（在不同服务器上的进程）。
 
 Simply put, distributed locks are used when multiple processes compete for shared resource, thus ensuring that only 
-one process operates shared resource at a time, avoiding conflicts.
+one process operates shared resource at a time, avoiding conflicts. The purpose is similar to thread lock, but it is 
+used to coordinate multiple services(processes on different servers)
 
 ### How to implement
 
@@ -40,3 +42,11 @@ Reference: [Redlock](https://redis.io/topics/distlock), Not only detailed implem
 当然，我也会根据理解书写自己的实现版本作为练习。
 
 Of course, I also write my own implementation version as an exercise.
+
+### My Implementation
+
+首先实现一个redis实例即单节点的例子，这个是基础。通过多线程方式模拟测试，实际应用不应该是多线程环境，否则使用线程同步相关技术就好了。
+
+The first implement example is base on a redis instance that is a single node, this is foundation. 
+Test code uses multi-threaded simulation, the actual application environment should not be a multi-threaded, 
+otherwise it would be better to use the thread synchronization related technology. 
