@@ -1,3 +1,4 @@
+import com.gino.lock.RedLock;
 import com.gino.lock.SingleRedisLock;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -28,6 +29,27 @@ public class RedisLockTest {
                 if (uuid != null) {
                     shared++;
                     SingleRedisLock.releaseLock(lockName, uuid);
+                }
+            });
+        }
+
+        executorService.shutdown();
+        while (!executorService.isTerminated()) {
+        }
+        log.info("shared: {}", shared);
+    }
+
+    @Test
+    public void redLockTest() {
+        RedLock redLock = new RedLock(5);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
+        for (int i = 0; i < 50; i++) {
+            executorService.execute(() -> {
+                String uuid = redLock.getLock(lockName, 50, 5000);
+                if (uuid != null) {
+                    shared++;
+                    redLock.releaseLock(lockName, uuid);
                 }
             });
         }

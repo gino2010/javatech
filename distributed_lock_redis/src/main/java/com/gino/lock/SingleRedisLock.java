@@ -1,11 +1,10 @@
 package com.gino.lock;
 
 import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.*;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Response;
+import redis.clients.jedis.Transaction;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.UUID;
 
 /**
@@ -16,40 +15,7 @@ import java.util.UUID;
  * Created on 2018/5/2
  */
 @Slf4j
-public class SingleRedisLock {
-    private static final String CONFIG = "config.properties";
-    private static final String PREFIX = "dislock:";
-    private static final String ADDRESS = "127.0.0.1";
-    private static final int PORT = 6379;
-    private static final int TIMEOUT = 2000;
-
-    private static JedisPool jedisPool;
-
-    // initial configuration from properties file
-    static {
-        ClassLoader classLoader = SingleRedisLock.class.getClassLoader();
-        JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(500);
-        config.setMaxIdle(10);
-        config.setMaxWaitMillis(100_000);
-
-        InputStream inputStream = classLoader.getResourceAsStream(CONFIG);
-        if (inputStream != null) {
-            Properties properties = new Properties();
-            try {
-                properties.load(inputStream);
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            jedisPool = new JedisPool(config, properties.getProperty("address", ADDRESS),
-                    Integer.parseInt(properties.getProperty("port", String.valueOf(PORT))),
-                    Integer.parseInt(properties.getProperty("timeout", String.valueOf(TIMEOUT))));
-        } else {
-            jedisPool = new JedisPool(config, ADDRESS, PORT, TIMEOUT);
-        }
-    }
-
+public class SingleRedisLock extends RedisConfig {
     /**
      * Get Lock
      *
