@@ -52,5 +52,6 @@ Test code uses multi-threaded simulation, the actual application environment sho
 otherwise it would be better to use the thread synchronization related technology.
 
 初步实现了RedLock方式，用于多个Redis节点，增强其稳定性。但实际使用可能还是单节点比较多，需要考虑锁失效的弥补方式。
+
 The RedLock way was initially implemented for multiple Redis nodes to enhance their stability. 
 However, the actual use may be more single-node, and it is necessary to consider the way to make up the lock failure. 
