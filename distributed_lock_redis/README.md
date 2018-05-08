@@ -55,3 +55,11 @@ otherwise it would be better to use the thread synchronization related technolog
 
 The RedLock way was initially implemented for multiple Redis nodes to enhance their stability. 
 However, the actual use may be more single-node, and it is necessary to consider the way to make up the lock failure. 
+
+### Defect
+
+- 没有使用lua脚本对redis进行操作
+- RedLock 没有实现多节点，只是通过不同db进行多节点实现模拟
+
+- Do not use lua script to manipulate redis
+- RedLock does not implement multi-nodes, just simulate multi-node with different db
