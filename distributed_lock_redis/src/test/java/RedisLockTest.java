@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,12 +42,18 @@ public class RedisLockTest {
 
     @Test
     public void redLockTest() {
-        RedLock redLock = new RedLock(5);
-
+        Random random = new Random();
         ExecutorService executorService = Executors.newFixedThreadPool(50);
         for (int i = 0; i < 50; i++) {
+            RedLock redLock = new RedLock(5);
+            // simulate time different between each lock required request
+            try {
+                Thread.sleep(random.nextInt(10)*100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             executorService.execute(() -> {
-                String uuid = redLock.getLock(lockName, 50, 5000);
+                String uuid = redLock.getLock(lockName, 3000, 5000);
                 if (uuid != null) {
                     shared++;
                     redLock.releaseLock(lockName, uuid);

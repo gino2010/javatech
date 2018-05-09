@@ -50,6 +50,7 @@ public class RedLock extends RedisConfig {
         while (System.currentTimeMillis() < tryEnd) {
             String res = resource.set(lockKey, uuid, "NX", "PX", keyExpire);
             if ("OK".equals(res)) {
+                log.info("DB {} Get lock, uuid: {}", db, uuid);
                 resource.close();
                 return true;
             }
