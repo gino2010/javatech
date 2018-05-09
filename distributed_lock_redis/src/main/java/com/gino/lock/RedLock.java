@@ -51,7 +51,6 @@ public class RedLock extends RedisConfig {
             String res = resource.set(lockKey, uuid, "NX", "PX", keyExpire);
             if ("OK".equals(res)) {
                 resource.close();
-                log.info("DB {} Get lock, uuid: {}", db, uuid);
                 return true;
             }
 
@@ -80,11 +79,11 @@ public class RedLock extends RedisConfig {
 
         // use lua script for atomicity. The effect is same as Watch Method and Multi Transaction
         try {
-            String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1]\n" +
-                    "then\n" +
-                    "    return redis.call(\"del\",KEYS[1])\n" +
-                    "else\n" +
-                    "    return 0\n" +
+            String script = "if redis.call('get',KEYS[1]) == ARGV[1] " +
+                    "then " +
+                    "    return redis.call('del',KEYS[1]) " +
+                    "else " +
+                    "    return 0 " +
                     "end";
             Object eval = resource.eval(script, Collections.singletonList(lockKey), Collections.singletonList(uuid));
             retFlag = "1".equals(eval.toString());
@@ -140,7 +139,7 @@ public class RedLock extends RedisConfig {
         long end = System.currentTimeMillis();
 
         if ((passNode.get() >= nodes / 2 + 1) && (end - start) < keyExpire) {
-            log.info("Get RedLock uuid {}", uuid);
+            log.info("Get RedLock uuid {}, pass node:{}", uuid, passNode.get());
             return uuid;
         } else {
             log.info("Get RedLock failed");
