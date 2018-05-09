@@ -2,9 +2,8 @@ package com.gino.lock;
 
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Response;
-import redis.clients.jedis.Transaction;
 
+import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -79,22 +78,19 @@ public class RedLock extends RedisConfig {
         boolean retFlag = false;
         resource.select(db);
 
+        // use lua script for atomicity. The effect is same as Watch Method and Multi Transaction
         try {
-            resource.watch(lockKey);
-            if (uuid.equals(resource.get(lockKey))) {
-                Transaction multi = resource.multi();
-                Response<Long> del = multi.del(lockKey);
-                multi.exec();
-                if (del.get() == 1) {
-                    log.info("DB {} Release lock, uuid: {}", db, uuid);
-                    retFlag = true;
-                }
-                multi.close();
-            }
+            String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1]\n" +
+                    "then\n" +
+                    "    return redis.call(\"del\",KEYS[1])\n" +
+                    "else\n" +
+                    "    return 0\n" +
+                    "end";
+            Object eval = resource.eval(script, Collections.singletonList(lockKey), Collections.singletonList(uuid));
+            retFlag = "1".equals(eval.toString());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            resource.unwatch();
             resource.close();
         }
 
@@ -169,5 +165,4 @@ public class RedLock extends RedisConfig {
         while (!executorService.isTerminated()) {
         }
     }
-
 }
