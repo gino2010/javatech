@@ -10,8 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 单例实现测试
- *
  * @author gino
  * Created on 2018/5/2
  */
@@ -21,6 +19,9 @@ public class RedisLockTest {
     private static int shared = 0;
     private String lockName = "test";
 
+    /**
+     * 单例实现测试
+     */
     @Test
     public void lockTest() {
         ExecutorService executorService = Executors.newFixedThreadPool(50);
@@ -40,6 +41,9 @@ public class RedisLockTest {
         log.info("shared: {}", shared);
     }
 
+    /**
+     * 模拟多节点测试
+     */
     @Test
     public void redLockTest() {
         Random random = new Random();
@@ -48,7 +52,7 @@ public class RedisLockTest {
             RedLock redLock = new RedLock(5);
             // simulate time different between each lock required request
             try {
-                Thread.sleep(random.nextInt(10)*100);
+                Thread.sleep(random.nextInt(10) * 100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
