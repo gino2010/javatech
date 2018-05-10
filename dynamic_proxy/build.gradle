@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.springframework', name: 'spring-aop', version: '5.0.6.RELEASE'
     compile group: 'cglib', name: 'cglib', version: '3.2.6'
     compile group: 'org.javassist', name: 'javassist', version: '3.22.0-GA'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
