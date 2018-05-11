@@ -4,7 +4,7 @@
 
 I found that many companies(BAT) are using mybatis or older ibatis. For this reason, I write this simple example to understand.
 
-本人平时更多还是使用Spring Data JPA多一些，可能你会觉得没有mybatis轻便，但是用熟了是很高效的。
+本人平时更多还是使用Spring Data JPA，可能你会觉得没有mybatis轻便，但是用熟了是很高效的。
 
 I usually use Spring Data JPA more often, maybe you feel mybatis is lighter than it, but it is very efficient when you are familiar with it.
 
@@ -15,4 +15,10 @@ It is recommended that you read it to avoid some unnecessary trouble in the deve
 
 ### Proposal
 这个例子很简单，就是CRUD
+
 This example is very simple, only CRUD
+
+### Feel
+一点都不好，我讨厌编辑XML对应的mapper
+
+feel bad, I hate editing mapper xml file.
