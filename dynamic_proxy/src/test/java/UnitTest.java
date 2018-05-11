@@ -103,6 +103,7 @@ public class UnitTest {
 
     @Test
     public void tryBeanGenerator() {
+        log.info("-----bean generator-----");
         BeanGenerator beanGenerator = new BeanGenerator();
         beanGenerator.addProperty("name", String.class);
 
