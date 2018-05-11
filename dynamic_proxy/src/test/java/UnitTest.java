@@ -101,18 +101,17 @@ public class UnitTest {
         subject.display("augment");
     }
 
-    // 和预想的有出入，getter没有正确返回
     @Test
     public void tryBeanGenerator() {
-        // TODO: 2018/4/17 还需要调整
         BeanGenerator beanGenerator = new BeanGenerator();
         beanGenerator.addProperty("name", String.class);
+
         Object myBean = beanGenerator.create();
         try {
             Method setter = myBean.getClass().getMethod("setName", String.class);
             setter.invoke(myBean, "cglib generator");
             Method getter = myBean.getClass().getMethod("getName");
-            log.info("result: ", getter.invoke(myBean));
+            log.info("result: {}", getter.invoke(myBean));
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
