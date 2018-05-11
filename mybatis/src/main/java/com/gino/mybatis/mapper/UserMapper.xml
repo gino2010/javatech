@@ -10,7 +10,7 @@
         <result property="name" column="name" javaType="java.lang.String"/>
         <result property="age" column="age" javaType="java.lang.Integer"/>
         <result property="address" column="address" javaType="java.lang.String"/>
-        <result property="createTime" column="create_time" javaType="java.sql.Timestamp"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="create_time" javaType="java.sql.Timestamp"/>
     </resultMap>
 
     <!-- select语句 -->
@@ -19,17 +19,17 @@
     </select>
 
     <select id="selectUsersByName" parameterType="string" resultType="UserBean">
-        select id, name, age, address, create_time from demo_user where name = #{userName}
+        select * from demo_user where name = #{userName}
     </select>
 
     <insert id="addUser" parameterType="UserBean"
             useGeneratedKeys="true" keyProperty="id">
         insert into demo_user(name,age,address,create_time)
-             values(#{name},#{age},#{address}, #{createTime})
+             values(#{name},#{age},#{address}, #{createTime, jdbcType=TIMESTAMP})
     </insert>
 
     <update id="updateUser" parameterType="UserBean" >
-        update demo_user set name=#{name},age=#{age},address=#{address}, create_time=#{createTime} where id=#{id}
+        update demo_user set name=#{name},age=#{age},address=#{address}, create_time=#{createTime, jdbcType=TIMESTAMP} where id=#{id}
     </update>
 
     <delete id="deleteUser" parameterType="int">
