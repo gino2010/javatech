@@ -21,7 +21,6 @@ public class SpringProxy implements MethodBeforeAdvice, AfterReturningAdvice {
 
     @Override
     public void before(Method method, Object[] args, Object target) throws Throwable {
-        log.info("Spring AOP Proxy");
         log.info("before method:{}", method);
     }
 }

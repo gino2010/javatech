@@ -1,9 +1,7 @@
+import com.gino.jvm.model.Augment;
 import com.gino.jvm.model.Subject;
 import com.gino.jvm.model.SubjectImpl;
-import com.gino.jvm.proxy.AssistProxy;
-import com.gino.jvm.proxy.CglibProxy;
-import com.gino.jvm.proxy.DynamicProxy;
-import com.gino.jvm.proxy.SpringProxy;
+import com.gino.jvm.proxy.*;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.beans.BeanGenerator;
 import org.junit.Test;
@@ -85,6 +83,22 @@ public class UnitTest {
         Subject subject = (Subject) proxyFactory.getProxy();
         Boolean result = subject.hello("spring aop");
         log.info("return result:{}", result);
+    }
+
+    @Test
+    public void springAugment() {
+        log.info("-----spring augment-----");
+        ProxyFactory proxyFactory = new ProxyFactory();
+        // proxyFactory.setInterfaces(Subject.class);
+        proxyFactory.setTarget(new SubjectImpl());
+        proxyFactory.addAdvice(new AugmentAdvice());
+        proxyFactory.setProxyTargetClass(true);
+
+        SubjectImpl subjectImpl = (SubjectImpl) proxyFactory.getProxy();
+        subjectImpl.hello("augment");
+        Augment subject = (Augment) proxyFactory.getProxy();
+        log.info("augment method: ");
+        subject.display("augment");
     }
 
     // 和预想的有出入，getter没有正确返回
