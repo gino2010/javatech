@@ -16,11 +16,7 @@ public class UnitTest {
 
     @Test
     public void testCRUD(){
-        UserBean user = new UserBean();
-        user.setName("test");
-        user.setAge(30);
-        user.setAddress("place");
-        user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        UserBean user = new UserBean(null, "test", 30, "place", new Timestamp(System.currentTimeMillis()));
 
         int id = userDao.addUser(user);
         userDao.getUserList("test");
@@ -29,5 +25,6 @@ public class UnitTest {
         userDao.updateUser(user);
         userDao.getUserByID(id);
         userDao.deleteUser(id);
+
     }
 }
