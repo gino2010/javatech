@@ -13,12 +13,12 @@ systems have complex scenarios. Each technology has its own characteristics.
 
 ### Environment
 - 在 Ubuntu Server 上，docker 启动 [zookeeper](https://hub.docker.com/_/zookeeper/)
-- 在 Ubuntu Server 上，启动 tomcat9.0.7 运行[dubbo-admin](https://github.com/apache/incubator-dubbo-ops/tree/master/dubbo-admin)
-- 在 Mac OS X 上，运行生产者和消费者服务[office code](https://github.com/apache/incubator-dubbo/tree/master/dubbo-demo)
+- 在 Ubuntu Server 上，启动 tomcat9.0.7 运行 [dubbo-admin](https://github.com/apache/incubator-dubbo-ops/tree/master/dubbo-admin)
+- 在 Mac OS X 上，运行生产者和消费者服务 [office code](https://github.com/apache/incubator-dubbo/tree/master/dubbo-demo)
 
 - On Ubuntu Server, docker run [zookeeper](https://hub.docker.com/_/zookeeper/)
 - On Ubuntu Server, start tomcat9.0.7 and deploy [dubbo-admin](https://github.com/apache/incubator-dubbo-ops/tree/master/dubbo-admin)
-- On Mac OS X, run provider and consumer service[office code](https://github.com/apache/incubator-dubbo/tree/master/dubbo-demo)
+- On Mac OS X, run provider and consumer service [office code](https://github.com/apache/incubator-dubbo/tree/master/dubbo-demo)
 
 ### Summary
 2018-05-18
@@ -37,4 +37,4 @@ Referring to the official sample code, I initially experienced Dubbo。
 - Under multicast mode, you need to close wifi and set ipv4 prefer, otherwise: dubbo multicast Can't assign requested address
 
 In conclusion, the initial experience is still very simple. Afterward I will try other RPC implementation, such as gRPC.
-This incubation project is currently changing more frequently. If you want to use it directly, you must consider its mature. 
+This incubation project is currently changing more frequently. If you want to use it directly, you must consider its mature more. 
