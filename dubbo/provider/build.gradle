@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'com.gino.dubbo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':api')
+    compile group: 'com.alibaba', name: 'dubbo-config-spring', version: '2.6.1'
+    compile group: 'com.alibaba', name: 'dubbo-registry-zookeeper', version: '2.6.1'
+    compile group: 'com.alibaba', name: 'dubbo-registry-multicast', version: '2.6.1'
+    compile group: 'com.alibaba', name: 'dubbo-rpc-dubbo', version: '2.6.1'
+    compile group: 'com.alibaba', name: 'dubbo-remoting-netty', version: '2.6.1'
+    compile group: 'com.alibaba', name: 'dubbo-serialization-hessian2', version: '2.6.1'
+    compile group: 'org.springframework', name: 'spring-context', version: '5.0.6.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '5.0.6.RELEASE'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
