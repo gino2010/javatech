@@ -1,7 +1,7 @@
 # GRPC
-做一个GRPC的例子，初步体会一下。我很喜欢Google，所以对Google推崇的技术很有默认的好感。
+做一个GRPC的例子，初步体会一下。
 
-Make a GRPC example and get a first-hand experience. I really like Google, so I have a good feeling of default about Google's technology.
+Make a GRPC example and get a first-hand experience. 
 
 此工程包含 [protobuf](https://developers.google.com/protocol-buffers/) 和 [GRPC](https://grpc.io/) 两部分。虽然之前有所了解过
 相关内容，一是时间较长了，二是并没有做过GRPC相对完整的例子，三是我对此技术真的很想实际使用，所以今天来再次研究一下。
