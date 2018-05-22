@@ -16,3 +16,10 @@ complete example of GRPC, and third is that I really want to actually use this t
 
 ### References
 - [protobuf example](https://github.com/google/protobuf/tree/master/examples)
+- [grpc example](https://github.com/grpc/grpc-java/tree/v1.12.0)
+
+### Tips
+工程采用gradle管理，请使用gradle任务进行编译，如果用idea进行编译，第一次静态语法检查无法通过。
+
+This project use gradle management, please use gradle tasks to compile, if you use idea to compile, at first time, the 
+static grammar check fails.
