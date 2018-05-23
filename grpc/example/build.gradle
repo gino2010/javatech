@@ -22,11 +22,14 @@ repositories {
 }
 
 def grpcVersion = '1.12.0' // CURRENT_GRPC_VERSION
+def nettyTcNativeVersion = '2.0.7.Final'
 
 dependencies {
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
+    // Used for TLS in HelloWorldServerTls
+    compile "io.netty:netty-tcnative-boringssl-static:${nettyTcNativeVersion}"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
