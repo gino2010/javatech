@@ -16,12 +16,12 @@ def dubboVersion = '2.6.1'
 dependencies {
     compile project(':api')
 //    compile group: 'com.alibaba', name: 'dubbo', version: '2.6.1'
-    compile group: 'com.alibaba', name: 'dubbo-config-spring', version: '${dubboVersion}'
-    compile group: 'com.alibaba', name: 'dubbo-registry-zookeeper', version: '${dubboVersion}'
-    compile group: 'com.alibaba', name: 'dubbo-registry-multicast', version: '${dubboVersion}'
-    compile group: 'com.alibaba', name: 'dubbo-rpc-dubbo', version: '${dubboVersion}'
-    compile group: 'com.alibaba', name: 'dubbo-remoting-netty', version: '${dubboVersion}'
-    compile group: 'com.alibaba', name: 'dubbo-serialization-hessian2', version: '${dubboVersion}'
+    compile group: 'com.alibaba', name: 'dubbo-config-spring', version: "${dubboVersion}"
+    compile group: 'com.alibaba', name: 'dubbo-registry-zookeeper', version: "${dubboVersion}"
+    compile group: 'com.alibaba', name: 'dubbo-registry-multicast', version: "${dubboVersion}"
+    compile group: 'com.alibaba', name: 'dubbo-rpc-dubbo', version: "${dubboVersion}"
+    compile group: 'com.alibaba', name: 'dubbo-remoting-netty', version: "${dubboVersion}"
+    compile group: 'com.alibaba', name: 'dubbo-serialization-hessian2', version: "${dubboVersion}"
     compile group: 'org.springframework', name: 'spring-context', version: '5.0.6.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
