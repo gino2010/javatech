@@ -1,4 +1,4 @@
-#Method Handle
+# Method Handle
 
 刚刚知道除了反射之外，Java7版本加入了MethodHandle来实现方法作为参数传递。
 先实现一个简单例子，很好理解不多解释，慢慢研究。
