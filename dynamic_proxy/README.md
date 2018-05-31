@@ -16,3 +16,8 @@ This project mainly implements three dynamic proxy: JDK Proxy cglib Proxy and Ja
 - JDK Proxy user the java internal reflection mechanism, cglib uses the asm implementation(you can find it in dependencies), javassist implements itself.
 - JDK Proxy is faster to create proxy, but the performance of call function is inferior to cglib and javassist.
 - JDK Proxy and cglib have larger bytecode size and javassist bytecode size is smaller.
+
+### Additional
+增加spring proxy代理方式，同时增加spring 类增强方式。Spring是非常好并且常用的的Java开发框架，所以尝试使用其再实现。
+
+Add spring proxy way, and add spring augment way. Spring is very good and popular java development framework, so I try to used it to realize.
