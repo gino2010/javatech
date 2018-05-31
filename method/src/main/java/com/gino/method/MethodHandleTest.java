@@ -27,7 +27,7 @@ public class MethodHandleTest {
     static void transform(List<Integer> dataList, MethodHandle handle) throws Throwable {
         for (int i = 0; i < dataList.size(); i++) {
             // invoke method
-            dataList.set(i, (Integer) handle.invoke(dataList.get(i)));
+            dataList.set(i, (Integer) handle.invokeWithArguments(dataList.get(i)));
         }
     }
 
