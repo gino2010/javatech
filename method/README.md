@@ -5,4 +5,6 @@
 
 Just know that in addition to reflection, Java7 version added MethodHandle to implement 
 the method passed as a parameter.
-At first, write a simple example, easy to understand, no more explanation, study slowly. 
+At first, write a simple example, easy to understand, no more explanation, study slowly.
+
+[Reference Course](http://www.baeldung.com/java-method-handles) 
