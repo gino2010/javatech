@@ -17,7 +17,7 @@ public class HandlerExecutorPool {
         this.executor = new ThreadPoolExecutor(
                 Runtime.getRuntime().availableProcessors(),
                 maxPoolSize, 120L, TimeUnit.SECONDS,
-                // ArrayBlockingQueue 一个有界队列。
+                // ArrayBlockingQueue with range limit
                 new ArrayBlockingQueue<>(queueSize), namedThreadFactory);
     }
 

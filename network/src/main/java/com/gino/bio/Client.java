@@ -10,8 +10,8 @@ import java.net.Socket;
  * Created on 2018/6/28
  */
 public class Client {
-    final static String ADDRESS = "127.0.0.1";
-    final static int PORT = 8765;
+    private final static String ADDRESS = "127.0.0.1";
+    private final static int PORT = 8765;
 
     public static void main(String[] args) {
         Socket socket = null;
@@ -34,22 +34,22 @@ public class Client {
             if (in != null) {
                 try {
                     in.close();
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             if (out != null) {
                 try {
                     out.close();
-                } catch (Exception e2) {
-                    e2.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             if (socket != null) {
                 try {
                     socket.close();
-                } catch (Exception e3) {
-                    e3.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }

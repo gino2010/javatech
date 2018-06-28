@@ -8,7 +8,7 @@ import java.net.Socket;
  * Created on 2018/6/28
  */
 public class Server {
-    final static int PORT = 8765;
+    private final static int PORT = 8765;
 
     public static void main(String[] args) {
         ServerSocket server = null;
