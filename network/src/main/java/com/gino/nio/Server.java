@@ -3,10 +3,7 @@ package com.gino.nio;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
 
 /**
@@ -14,17 +11,17 @@ import java.util.Iterator;
  * Created on 2018/6/28
  */
 public class Server implements Runnable {
-    private Selector seletor;
+    private Selector selector;
     private ByteBuffer readBuf = ByteBuffer.allocate(1024);
-    private ByteBuffer writeBuf = ByteBuffer.allocate(1024);
+    private ServerSocketChannel ssc;
 
     public Server(int port) {
         try {
-            this.seletor = Selector.open();
-            ServerSocketChannel ssc = ServerSocketChannel.open();
+            this.selector = Selector.open();
+            ssc = ServerSocketChannel.open();
             ssc.configureBlocking(false);
             ssc.bind(new InetSocketAddress(port));
-            ssc.register(this.seletor, SelectionKey.OP_ACCEPT);
+            ssc.register(this.selector, SelectionKey.OP_ACCEPT);
 
             System.out.println("Server start, port :" + port);
 
@@ -37,20 +34,23 @@ public class Server implements Runnable {
     public void run() {
         while (true) {
             try {
-                this.seletor.select();
-                Iterator<SelectionKey> keys = this.seletor.selectedKeys().iterator();
+                this.selector.select();
+                Iterator<SelectionKey> keys = this.selector.selectedKeys().iterator();
                 while (keys.hasNext()) {
                     SelectionKey key = keys.next();
                     keys.remove();
                     if (key.isValid()) {
                         if (key.isAcceptable()) {
                             this.accept(key);
+                            continue;
                         }
                         if (key.isReadable()) {
                             this.read(key);
+                            continue;
                         }
                         if (key.isWritable()) {
                             this.write(key);
+                            continue;
                         }
                     }
 
@@ -61,10 +61,12 @@ public class Server implements Runnable {
         }
     }
 
-    private void write(SelectionKey key) {
-        SocketChannel sc = (SocketChannel) key.channel();
+    private void accept(SelectionKey key) {
         try {
-            sc.write(ByteBuffer.wrap("server back".getBytes()));
+            ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
+            SocketChannel sc = ssc.accept();
+            sc.configureBlocking(false);
+            sc.register(this.selector, SelectionKey.OP_READ);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +80,7 @@ public class Server implements Runnable {
             if (count == -1) {
                 key.channel().close();
                 key.cancel();
+                ssc.register(this.selector, SelectionKey.OP_ACCEPT);
                 return;
             }
             this.readBuf.flip();
@@ -86,8 +89,7 @@ public class Server implements Runnable {
             String body = new String(bytes).trim();
             System.out.println("Server : " + body);
 
-            // 9..可以写回给客户端数据
-            sc.register(this.seletor, SelectionKey.OP_WRITE);
+            sc.register(this.selector, SelectionKey.OP_WRITE);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,12 +97,11 @@ public class Server implements Runnable {
 
     }
 
-    private void accept(SelectionKey key) {
+    private void write(SelectionKey key) {
+        SocketChannel sc = (SocketChannel) key.channel();
         try {
-            ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
-            SocketChannel sc = ssc.accept();
-            sc.configureBlocking(false);
-            sc.register(this.seletor, SelectionKey.OP_READ);
+            sc.write(ByteBuffer.wrap("server back".getBytes()));
+            sc.register(this.selector, SelectionKey.OP_READ);
         } catch (IOException e) {
             e.printStackTrace();
         }

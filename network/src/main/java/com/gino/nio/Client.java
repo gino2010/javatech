@@ -26,25 +26,25 @@ public class Client {
                 byte[] bytes = new byte[1024];
                 System.in.read(bytes);
 
+                buf.clear();
                 buf.put(bytes);
                 buf.flip();
                 sc.write(buf);
+
                 buf.clear();
                 sc.read(buf);
                 buf.flip();
-                System.out.println(new String(buf.array(),0,buf.limit()));
+                System.out.println(new String(buf.array(), 0, buf.limit()));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
             if (sc != null) {
                 try {
                     sc.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
                 }
             }
         }
-
     }
 }
