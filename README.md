@@ -13,12 +13,12 @@ I hope that I can strengthen and sort my own Java technology by maintaining this
 Not only in Java application development but also in Java foundational technology like JVM.
 
 ### Instructions
-- 工程主要使用JDK1.8创建，今后可能会尝试JDK9的功能
+- 工程主要使用JDK1.8创建，今后可能会尝试JDK10的功能
 - 工程中每个子目录为独立工程，可以单独运行
 - 工程使用Gradle构建
 
 
-- This project is mainly created using JDK1.8 and may try features of JDK9 in the future
+- This project is mainly created using JDK1.8 and may try features of JDK10 in the future
 - Each subdirectory in this project root is a separate project that can be run independently
 - This project is built using Gradle
 
