@@ -7,6 +7,7 @@ import java.nio.channels.*;
 import java.util.Iterator;
 
 /**
+ * accept should be in other thread, relative write and read
  * @author gino
  * Created on 2018/6/28
  */
@@ -50,7 +51,6 @@ public class Server implements Runnable {
                         }
                         if (key.isWritable()) {
                             this.write(key);
-                            continue;
                         }
                     }
 
@@ -67,6 +67,7 @@ public class Server implements Runnable {
             SocketChannel sc = ssc.accept();
             sc.configureBlocking(false);
             sc.register(this.selector, SelectionKey.OP_READ);
+            ssc.register(this.selector, SelectionKey.OP_ACCEPT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,7 +81,6 @@ public class Server implements Runnable {
             if (count == -1) {
                 key.channel().close();
                 key.cancel();
-                ssc.register(this.selector, SelectionKey.OP_ACCEPT);
                 return;
             }
             this.readBuf.flip();
