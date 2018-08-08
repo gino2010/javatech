@@ -5,6 +5,7 @@
 .gradle
 *.iml
 out/
+build/
 gen### Java template
 # Compiled class file
 *.class
