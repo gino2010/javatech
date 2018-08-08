@@ -6,6 +6,7 @@ This project is a chat example based on grpc. The prupose is to simulate long co
 and bi-directional streaming and do some technical experiments for subsequent project communication.
 
 ### How to Run
+
 first of all, you should generate source code of protobuf and grpc
 - cd \<server path>
 - gradle build
@@ -13,4 +14,7 @@ first of all, you should generate source code of protobuf and grpc
 second, run server and client
 
 ### Reference
-https://github.com/saturnism/grpc-java-by-example/tree/master/chat-example
+
+[chat-example](https://github.com/saturnism/grpc-java-by-example/tree/master/chat-example)
+
+[grpc-spring-boot-start](https://github.com/LogNet/grpc-spring-boot-starter)
