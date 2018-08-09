@@ -27,6 +27,7 @@ public class ChatClient extends Application {
     private TextField name = new TextField("name");
     private TextField message = new TextField();
     private Button send = new Button();
+    private Button login = new Button();
 
     public static void main(String[] args) {
         launch(args);
@@ -37,11 +38,13 @@ public class ChatClient extends Application {
         messagesView.setItems(messages);
 
         send.setText("Send");
+        login.setText("login");
 
         BorderPane pane = new BorderPane();
         pane.setLeft(name);
         pane.setCenter(message);
         pane.setRight(send);
+        pane.setBottom(login);
 
         BorderPane root = new BorderPane();
         root.setCenter(messagesView);
@@ -52,7 +55,8 @@ public class ChatClient extends Application {
 
         primaryStage.show();
 
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 6565).usePlaintext(true).build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 6565).usePlaintext().build();
+
         ChatServiceGrpc.ChatServiceStub chatService = ChatServiceGrpc.newStub(channel);
         StreamObserver<Chat.ChatMessage> chat = chatService.chat(new StreamObserver<Chat.ChatMessageFromServer>() {
             @Override
@@ -66,12 +70,12 @@ public class ChatClient extends Application {
             @Override
             public void onError(Throwable t) {
                 t.printStackTrace();
-                System.out.println("Disconnected");
+                System.out.println("Error and Disconnected");
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("Disconnected");
+                System.out.println("Completed and Disconnected");
             }
         });
 
@@ -79,6 +83,11 @@ public class ChatClient extends Application {
             chat.onNext(Chat.ChatMessage.newBuilder().setFrom(name.getText()).setMessage(message.getText()).build());
             message.setText("");
         });
+
+        login.setOnAction(e -> {
+            chat.onNext(Chat.ChatMessage.newBuilder().setFrom(name.getText()).setMessage("login").build());
+        });
+
         primaryStage.setOnCloseRequest(e -> {
             chat.onCompleted();
             channel.shutdown();
