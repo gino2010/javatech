@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form id="image" method="POST" enctype="multipart/form-data" action="/">
+        <table>
+            <tr>
+                <td>ID</td>
+                <td><input type="number" name="id" readonly/></td>
+            </tr>
+            <tr>
+                <td>User Id</td>
+                <td><input type="text" name="user_id" maxlength="10"/></td>
+            </tr>
+            <tr>
+                <td>Image:</td>
+                <td><input type="file" name="image" accept="image/jpeg"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Upload"/>
+                    <button type="button" onclick="myclear()" style="width: 50px">Reset</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Image</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entity : ${entities}">
+        <td th:text="${entity.getId()}"></td>
+        <td th:text="${entity.getUserId()}"></td>
+        <td><img th:src="@{'data:image/jpeg;base64,'+${entity.generateBase64Image()}}" width="350" height="200"/></td>
+        <td>
+            <button style="width: 50px" th:onclick="|myedit(${entity.getId()}, '${entity.getUserId()}')|">Edit</button>
+            <form style="margin-bottom: 0" th:action="'/del/'+${entity.getId()}" method='post'><input
+                    style="width: 50px" type='submit' value='Delete'></form>
+        </td>
+        <td><span th:id="${entity.getId()}"></span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+<script>
+    function myedit(id, userId) {
+        console.log("edit");
+        document.getElementsByName("id")[0].value = id;
+        document.getElementsByName("user_id")[0].value = userId;
+        document.getElementById(id).innerText = "editing";
+    }
+
+    function myclear() {
+        console.log("reset");
+        var id = document.getElementsByName("id")[0].value;
+        if (id != null && id !== "") {
+            document.getElementById(id).innerText = "";
+        }
+        document.getElementById("image").reset();
+    }
+</script>
+</html>
