@@ -99,7 +99,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, final int position) {
         if (isSectionHeaderPosition(position)) {
             ((SectionViewHolder) sectionViewHolder).title.setText(mSections.get(position).title);
         } else {
@@ -108,6 +108,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             sectionViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    System.out.println(position);
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     transaction.replace(R.id.fragment_container, new SliderFragment())
                             .addToBackStack(null)
