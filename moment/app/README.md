@@ -36,3 +36,5 @@ If I implement this project, I definitely don't use this tech architecture
 程序的实际布局和设计稿还是有点细节区别，这个需要在研究一下
 
 There is still a little different between app layout and design layout. I need to study more.
+
+优化图片缓存减少网络请求

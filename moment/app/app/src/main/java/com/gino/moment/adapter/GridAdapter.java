@@ -73,5 +73,8 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
         return mItems.size();
     }
 
+    public List<Integer> getmItems() {
+        return mItems;
+    }
 }
 

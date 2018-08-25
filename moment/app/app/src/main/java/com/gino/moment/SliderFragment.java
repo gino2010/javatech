@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.gino.moment.adapter.SliderAdapter;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -29,12 +29,23 @@ public class SliderFragment extends Fragment {
 
     Toolbar toolbar;
 
+    private List<Integer> imageList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_slider, container, false);
         ButterKnife.bind(this, inflate);
         return inflate;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            imageList = bundle.getIntegerArrayList("images");
+        }
     }
 
     @Override
@@ -51,12 +62,7 @@ public class SliderFragment extends Fragment {
                 }
             }
         });
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("http://i.imgur.com/DvpvklR.png");
-        strings.add("http://i.imgur.com/DvpvklR.png");
-        strings.add("http://i.imgur.com/DvpvklR.png");
-        strings.add("http://i.imgur.com/DvpvklR.png");
-        viewPager.setAdapter(new SliderAdapter(strings, getContext()));
+        viewPager.setAdapter(new SliderAdapter(imageList, getContext()));
         circleIndicator.setViewPager(viewPager);
     }
 

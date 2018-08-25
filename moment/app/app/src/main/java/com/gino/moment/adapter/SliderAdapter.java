@@ -7,23 +7,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.gino.moment.Base64HttpClient;
 import com.gino.moment.R;
+import com.gino.moment.service.MomentService;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SliderAdapter extends PagerAdapter {
-    private ArrayList<String> images;
+    private List<Integer> imageIds;
     private Context context;
+    private MomentService momentService;
 
-    public SliderAdapter(ArrayList<String> images, Context context) {
-        this.images = images;
+    public SliderAdapter(List<Integer> imageList, Context context) {
+        this.imageIds = imageList;
         this.context = context;
+        momentService = new MomentService(context);
     }
 
     @Override
     public int getCount() {
-        return images.size();
+        return imageIds.size();
     }
 
     @Override
@@ -37,8 +41,8 @@ public class SliderAdapter extends PagerAdapter {
         ImageView imageView;
         imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        Picasso.get()
-                .load(images.get(position))
+        (new Picasso.Builder(context).downloader(Base64HttpClient.build().getOkHttp3Downloader())).build()
+                .load(momentService.getImageAddress(imageIds.get(position)))
                 .placeholder(R.drawable.loader)
                 .into(imageView);
         container.addView(imageView);
