@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.gino.moment.adapter.GridAdapter;
 import com.gino.moment.adapter.SectionAdapter;
+import com.gino.moment.model.GridData;
+import com.gino.moment.service.MomentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,12 @@ public class MainActivityFragment extends Fragment {
     RecyclerView recyclerView;
 
     private GridAdapter gridAdapter;
+    private SectionAdapter mSectionedAdapter;
+
+    private MomentService momentService;
+
+    private List<SectionAdapter.Section> sections;
+    private List<Integer> imageIds;
 
     public MainActivityFragment() {
     }
@@ -42,22 +50,16 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        momentService = new MomentService(getContext());
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        gridAdapter = new GridAdapter(getContext());
-
-        List<SectionAdapter.Section> sections = new ArrayList<>();
-
-        //Sections
-        sections.add(new SectionAdapter.Section(0, "Section 1"));
-        sections.add(new SectionAdapter.Section(5, "Section 2"));
-        sections.add(new SectionAdapter.Section(12, "Section 3"));
-        sections.add(new SectionAdapter.Section(14, "Section 4"));
-        sections.add(new SectionAdapter.Section(20, "Section 5"));
-
+        // initial empty data
+        imageIds = new ArrayList<>();
+        gridAdapter = new GridAdapter(getContext(), imageIds);
+        sections = new ArrayList<>();
         //Add your adapter to the sectionAdapter
         SectionAdapter.Section[] dummy = new SectionAdapter.Section[sections.size()];
-        SectionAdapter mSectionedAdapter = new
+        mSectionedAdapter = new
                 SectionAdapter(getContext(), R.layout.grid_section, R.id.section_text, recyclerView, gridAdapter, getFragmentManager());
         mSectionedAdapter.setSections(sections.toArray(dummy));
 
@@ -66,15 +68,19 @@ public class MainActivityFragment extends Fragment {
         new AsyncHttpTask().execute();
     }
 
-    public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
+    public class AsyncHttpTask extends AsyncTask<Void, Void, GridData> {
         @Override
-        protected Integer doInBackground(String... strings) {
-            // TODO: 2018/8/24 请求图片序号
-            return null;
+        protected GridData doInBackground(Void... voids) {
+            return momentService.getUserImages();
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
+        protected void onPostExecute(GridData gridData) {
+            sections = gridData.getSections();
+            imageIds = gridData.getImageIds();
+            gridAdapter.refreshItem(imageIds);
+            SectionAdapter.Section[] sectionArray = new SectionAdapter.Section[sections.size()];
+            mSectionedAdapter.setSections(sections.toArray(sectionArray));
         }
     }
 }

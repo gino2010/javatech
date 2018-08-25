@@ -30,7 +30,7 @@ If I implement this project, I definitely don't use this tech architecture
 ### Environment
 - mac os x 10.13.6
 - android studio 3.1.4
-- android 7.1
+- android 7.1.1
 
 ### Note
 程序的实际布局和设计稿还是有点细节区别，这个需要在研究一下

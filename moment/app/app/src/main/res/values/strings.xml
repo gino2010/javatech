@@ -4,10 +4,12 @@
     <string name="action_user">User</string>
     <string name="desc_settings">Server IP Configuration</string>
     <string name="server">server</string>
-    <string name="ip_hint">192.168.0.1</string>
+    <string name="ip_hint">192.168.0.1:8080</string>
     <string name="save">Save</string>
+    <string name="saved">Saved</string>
     <string name="shared">moment</string>
     <string name="desc_user">Please Select User</string>
     <string name="user">User</string>
     <string name="save_as_login">Save as Login</string>
+    <string name="set_address">Please set server address at first!</string>
 </resources>

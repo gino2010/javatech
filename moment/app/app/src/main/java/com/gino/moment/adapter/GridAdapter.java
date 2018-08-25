@@ -8,17 +8,18 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.gino.moment.R;
+import com.gino.moment.service.MomentService;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHolder> {
-    private static final int COUNT = 100;
+//    private static final int COUNT = 100;
 
     private final Context mContext;
     private final List<Integer> mItems;
     private int mCurrentItemId = 0;
+    private MomentService momentService;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         public final ImageView imageView;
@@ -29,12 +30,14 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
         }
     }
 
-    public GridAdapter(Context context) {
+    public GridAdapter(Context context, List<Integer> items) {
         mContext = context;
-        mItems = new ArrayList<>(COUNT);
-        for (int i = 0; i < COUNT; i++) {
-            addItem(i);
-        }
+        mItems = items;
+        momentService = new MomentService(mContext);
+//        mItems = new ArrayList<>(COUNT);
+//        for (int i = 0; i < COUNT; i++) {
+//            addItem(i);
+//        }
     }
 
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,14 +51,14 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
         Picasso.get()
-                .load("http://i.imgur.com/DvpvklR.png")
+                .load(momentService.getImageAddress(mItems.get(position)))
                 .placeholder(R.drawable.loader)
                 .into(holder.imageView);
+//        holder.imageView.setImageBitmap(momentService.getImageById(mItems.get(position)));
     }
 
-    public void addItem(int position) {
-        final int id = mCurrentItemId++;
-        mItems.add(position, id);
+    public void addItem(int position, int imageId) {
+        mItems.add(position, imageId);
         notifyItemInserted(position);
     }
 
@@ -64,9 +67,15 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
         notifyItemRemoved(position);
     }
 
+    public void refreshItem(List<Integer> items) {
+        mItems.addAll(items);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mItems.size();
     }
+
 }
 
