@@ -37,7 +37,6 @@ public class SliderAdapter extends PagerAdapter {
         ImageView imageView;
         imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//        String url = ""+images.get(position);
         Picasso.get()
                 .load(images.get(position))
                 .placeholder(R.drawable.loader)

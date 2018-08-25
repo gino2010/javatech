@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import com.gino.moment.adapter.SliderAdapter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 public class SliderFragment extends Fragment {
@@ -40,13 +40,15 @@ public class SliderFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toolbar.setNavigationIcon(null);
-                getFragmentManager().popBackStack();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                }
             }
         });
         ArrayList<String> strings = new ArrayList<>();

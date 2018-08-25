@@ -1,7 +1,9 @@
 package com.gino.moment;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import com.gino.moment.service.MomentService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +43,7 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, inflate);
@@ -50,7 +53,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        momentService = new MomentService(getContext());
+        momentService = new MomentService(Objects.requireNonNull(getContext()));
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         // initial empty data
@@ -68,7 +71,8 @@ public class MainActivityFragment extends Fragment {
         new AsyncHttpTask().execute();
     }
 
-    public class AsyncHttpTask extends AsyncTask<Void, Void, GridData> {
+    @SuppressLint("StaticFieldLeak")
+    private class AsyncHttpTask extends AsyncTask<Void, Void, GridData> {
         @Override
         protected GridData doInBackground(Void... voids) {
             return momentService.getUserImages();

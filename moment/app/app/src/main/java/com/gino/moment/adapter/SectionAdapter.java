@@ -1,6 +1,8 @@
 package com.gino.moment.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,22 +26,18 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private boolean mValid = true;
     private int mSectionResourceId;
     private int mTextResourceId;
-    private LayoutInflater mLayoutInflater;
     private RecyclerView.Adapter mBaseAdapter;
     private SparseArray<Section> mSections = new SparseArray<>();
-    private RecyclerView mRecyclerView;
     private FragmentManager fragmentManager;
 
 
     public SectionAdapter(Context context, int sectionResourceId, int textResourceId, RecyclerView recyclerView,
                           RecyclerView.Adapter baseAdapter, FragmentManager fragmentManager) {
 
-        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;
         mTextResourceId = textResourceId;
         mBaseAdapter = baseAdapter;
         this.context = context;
-        mRecyclerView = recyclerView;
         this.fragmentManager = fragmentManager;
 
         mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -68,13 +66,15 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         });
 
-        final GridLayoutManager layoutManager = (GridLayoutManager) (mRecyclerView.getLayoutManager());
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return (isSectionHeaderPosition(position)) ? layoutManager.getSpanCount() : 1;
-            }
-        });
+        final GridLayoutManager layoutManager = (GridLayoutManager) (recyclerView.getLayoutManager());
+        if (layoutManager != null) {
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return (isSectionHeaderPosition(position)) ? layoutManager.getSpanCount() : 1;
+                }
+            });
+        }
     }
 
 
@@ -82,14 +82,15 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public TextView title;
 
-        public SectionViewHolder(View view, int mTextResourceid) {
+        SectionViewHolder(View view, int mTextResourceid) {
             super(view);
             title = view.findViewById(mTextResourceid);
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int typeView) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int typeView) {
         if (typeView == SECTION_TYPE) {
             final View view = LayoutInflater.from(context).inflate(mSectionResourceId, parent, false);
             return new SectionViewHolder(view, mTextResourceId);
@@ -99,7 +100,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder sectionViewHolder, @SuppressLint("RecyclerView") final int position) {
         if (isSectionHeaderPosition(position)) {
             ((SectionViewHolder) sectionViewHolder).title.setText(mSections.get(position).title);
         } else {
@@ -149,9 +150,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Arrays.sort(sections, new Comparator<Section>() {
             @Override
             public int compare(Section o, Section o1) {
-                return (o.firstPosition == o1.firstPosition)
-                        ? 0
-                        : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
+                return Integer.compare(o.firstPosition, o1.firstPosition);
             }
         });
 

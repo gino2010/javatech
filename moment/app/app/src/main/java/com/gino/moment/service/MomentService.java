@@ -2,9 +2,6 @@ package com.gino.moment.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.widget.Toast;
 
 import com.gino.moment.R;
@@ -26,12 +23,10 @@ import okhttp3.Response;
 
 public class MomentService {
     private boolean status = true;
-    private Context context;
     private String address;
     private OkHttpClient client;
 
     public MomentService(Context context) {
-        this.context = context;
         client = new OkHttpClient();
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -44,29 +39,6 @@ public class MomentService {
 
         address = String.format("http://%s/api/", address);
     }
-
-//    public List<String> getUserIds() {
-//        ArrayList<String> users = new ArrayList<>();
-//        if (status) {
-//            Request request = new Request.Builder().url(address + "user_id").build();
-//            try {
-//                Response response = client.newCall(request).execute();
-//                String jsonString = response.body().string();
-//                try {
-//                    JSONArray jsonArray = new JSONArray(jsonString);
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//                        String userId = jsonArray.getString(i);
-//                        users.add(userId);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return users;
-//    }
 
     public GridData getUserImages() {
         List<SectionAdapter.Section> sectionList = new ArrayList<>();
@@ -100,21 +72,6 @@ public class MomentService {
         }
 
         return new GridData(sectionList, imageList);
-    }
-
-    public Bitmap getImageById(Integer id) {
-        if (status) {
-            Request request = new Request.Builder().url(address + "image/" + id).build();
-            try {
-                Response response = client.newCall(request).execute();
-                String baseStr = response.body().string();
-                byte[] decodedString = Base64.decode(baseStr, Base64.DEFAULT);
-                return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 
     public String getImageAddress(Integer id) {

@@ -1,12 +1,14 @@
 package com.gino.moment.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.gino.moment.Base64HttpClient;
 import com.gino.moment.R;
 import com.gino.moment.service.MomentService;
 import com.squareup.picasso.Picasso;
@@ -14,17 +16,15 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHolder> {
-//    private static final int COUNT = 100;
 
     private final Context mContext;
     private final List<Integer> mItems;
-    private int mCurrentItemId = 0;
     private MomentService momentService;
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView imageView;
+    static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        final ImageView imageView;
 
-        public SimpleViewHolder(View view) {
+        SimpleViewHolder(View view) {
             super(view);
             imageView = (ImageView) view;
         }
@@ -34,13 +34,10 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
         mContext = context;
         mItems = items;
         momentService = new MomentService(mContext);
-//        mItems = new ArrayList<>(COUNT);
-//        for (int i = 0; i < COUNT; i++) {
-//            addItem(i);
-//        }
     }
 
-    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public SimpleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ImageView imageView = new ImageView(mContext);
         imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, parent.getWidth() / 9 * 4));
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -49,12 +46,11 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        Picasso.get()
+    public void onBindViewHolder(@NonNull SimpleViewHolder holder, final int position) {
+        (new Picasso.Builder(mContext).downloader(Base64HttpClient.build().getOkHttp3Downloader())).build()
                 .load(momentService.getImageAddress(mItems.get(position)))
                 .placeholder(R.drawable.loader)
                 .into(holder.imageView);
-//        holder.imageView.setImageBitmap(momentService.getImageById(mItems.get(position)));
     }
 
     public void addItem(int position, int imageId) {

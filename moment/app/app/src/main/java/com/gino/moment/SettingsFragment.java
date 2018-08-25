@@ -48,17 +48,19 @@ public class SettingsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toolbar.setNavigationIcon(null);
-                getFragmentManager().popBackStack();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                }
             }
         });
 
-        sharedPref = getContext().getSharedPreferences(
+        sharedPref = Objects.requireNonNull(getContext()).getSharedPreferences(
                 getString(R.string.shared), Context.MODE_PRIVATE);
 
         String server = sharedPref.getString(SERVER, null);
