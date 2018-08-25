@@ -7,13 +7,11 @@
     tools:showIn="@layout/activity_main"
     android:id="@+id/main_fragment">
 
-    <GridView
-        android:id="@+id/image_grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center" />
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="2dp"
+        tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>

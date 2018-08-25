@@ -3,28 +3,28 @@ package com.gino.moment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.gino.moment.adapter.GridAdapter;
+import com.gino.moment.adapter.SectionAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
-    @BindView(R.id.image_grid)
-    GridView gridView;
+    @BindView(R.id.rv_image)
+    RecyclerView recyclerView;
 
     private GridAdapter gridAdapter;
 
@@ -42,18 +42,28 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        gridAdapter = new GridAdapter(getContext());
-        gridView.setAdapter(gridAdapter);
-        new AsyncHttpTask().execute();
-    }
 
-    @OnItemClick(R.id.image_grid)
-    public void onItemClick(int position) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new SliderFragment())
-                .addToBackStack(null)
-                .commit();
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        gridAdapter = new GridAdapter(getContext());
+
+        List<SectionAdapter.Section> sections = new ArrayList<>();
+
+        //Sections
+        sections.add(new SectionAdapter.Section(0, "Section 1"));
+        sections.add(new SectionAdapter.Section(5, "Section 2"));
+        sections.add(new SectionAdapter.Section(12, "Section 3"));
+        sections.add(new SectionAdapter.Section(14, "Section 4"));
+        sections.add(new SectionAdapter.Section(20, "Section 5"));
+
+        //Add your adapter to the sectionAdapter
+        SectionAdapter.Section[] dummy = new SectionAdapter.Section[sections.size()];
+        SectionAdapter mSectionedAdapter = new
+                SectionAdapter(getContext(), R.layout.grid_section, R.id.section_text, recyclerView, gridAdapter, getFragmentManager());
+        mSectionedAdapter.setSections(sections.toArray(dummy));
+
+        //Apply this adapter to the RecyclerView
+        recyclerView.setAdapter(mSectionedAdapter);
+        new AsyncHttpTask().execute();
     }
 
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
@@ -65,12 +75,6 @@ public class MainActivityFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Integer integer) {
-            ArrayList<String> strings = new ArrayList<>();
-            strings.add("http://i.imgur.com/DvpvklR.png");
-            strings.add("http://i.imgur.com/DvpvklR.png");
-            strings.add("http://i.imgur.com/DvpvklR.png");
-            strings.add("http://i.imgur.com/DvpvklR.png");
-            gridAdapter.setImages(strings);
         }
     }
 }

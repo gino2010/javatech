@@ -35,15 +35,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_user) {
-            UserFragment userFragment = new UserFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, userFragment)
-                    .addToBackStack(null)
-                    .commit();
-            return true;
-        }
-
         if (id == R.id.action_settings) {
             SettingsFragment settingsFragment = new SettingsFragment();
             getSupportFragmentManager().beginTransaction()
