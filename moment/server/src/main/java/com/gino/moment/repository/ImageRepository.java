@@ -17,9 +17,6 @@ public interface ImageRepository extends JpaRepository<ImageEntity, Integer> {
     @Query(value = "select distinct userId from ImageEntity")
     List<String> getUserIds();
 
-    @Query(value = "select id from ImageEntity ")
-    List<Integer> getIds();
-
-    @Query(value= "select id from ImageEntity where userId = :userId")
+    @Query(value = "select id from ImageEntity where userId = :userId")
     List<Integer> getIdsByUserId(@Param("userId") String userId);
 }

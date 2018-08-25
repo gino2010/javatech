@@ -1,5 +1,6 @@
 package com.gino.moment.controller;
 
+import com.gino.moment.model.UserImage;
 import com.gino.moment.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +24,9 @@ public class ApiController {
         this.imageService = imageService;
     }
 
-    @GetMapping("id")
-    public List<Integer> getImageIds() {
-        return imageService.getIds();
-    }
-
-    @GetMapping("id/{user_id}")
-    public List<Integer> getImageIdsByUser(@PathVariable("user_id") String userId) {
-        return imageService.getIdByUserId(userId);
-    }
-
-    @GetMapping("user_id")
-    public List<String> getUserIds() {
-        return imageService.getUserIds();
+    @GetMapping("user_image")
+    public List<UserImage> getUserImages() {
+        return imageService.getUserImages();
     }
 
     @GetMapping("image/{id}")

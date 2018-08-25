@@ -1,11 +1,13 @@
 package com.gino.moment.service;
 
 import com.gino.moment.entity.ImageEntity;
+import com.gino.moment.model.UserImage;
 import com.gino.moment.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,10 +39,6 @@ public class ImageService {
         return entity.getId();
     }
 
-    public List<Integer> getIds() {
-        return imageRepository.getIds();
-    }
-
     public List<ImageEntity> getImages() {
         return imageRepository.findAll();
     }
@@ -51,12 +49,14 @@ public class ImageService {
         return true;
     }
 
-    public List<Integer> getIdByUserId(String userId) {
-        return imageRepository.getIdsByUserId(userId);
-    }
-
-    public List<String> getUserIds() {
-        return imageRepository.getUserIds();
+    public List<UserImage> getUserImages() {
+        List<UserImage> userImageList = new ArrayList<>();
+        List<String> userIds = imageRepository.getUserIds();
+        for (String user : userIds) {
+            List<Integer> idsByUserId = imageRepository.getIdsByUserId(user);
+            userImageList.add(new UserImage(user, idsByUserId));
+        }
+        return userImageList;
     }
 
     public ImageEntity getImageById(Integer id) {
