@@ -36,3 +36,5 @@ Some of the content in this project is not the main contact area of my current w
 After all, I am not good at writing web pages, so:
 - The front end does not use js packages such as jQuery, simplify the implementation as much as possible and use plain JavaScript, no Ajax
 - No relevant CSS packages such as BootStrap are used, the layout is simple
+
+screenshot目录中有截图
