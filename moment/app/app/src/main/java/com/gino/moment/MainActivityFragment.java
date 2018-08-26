@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,12 +29,14 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_image)
     RecyclerView recyclerView;
-    @BindView(R.id.progressBar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private GridAdapter gridAdapter;
     private SectionAdapter mSectionedAdapter;
@@ -51,6 +54,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, inflate);
+        swipeRefreshLayout.setOnRefreshListener(this);
         return inflate;
     }
 
@@ -78,6 +82,12 @@ public class MainActivityFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private class AsyncHttpTask extends AsyncTask<Void, Void, GridData> {
         @Override
+        protected void onPreExecute() {
+            swipeRefreshLayout.setRefreshing(false);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected GridData doInBackground(Void... voids) {
             return momentService.getUserImages();
         }
@@ -94,5 +104,10 @@ public class MainActivityFragment extends Fragment {
                 Toast.makeText(getContext(), gridData.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        new AsyncHttpTask().execute();
     }
 }
