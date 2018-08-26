@@ -5,12 +5,14 @@ import com.gino.moment.adapter.SectionAdapter;
 import java.util.List;
 
 public class GridData {
-    List<SectionAdapter.Section> sections;
-    List<Integer> imageIds;
+    private List<SectionAdapter.Section> sections;
+    private List<Integer> imageIds;
+    private String message;
 
-    public GridData(List<SectionAdapter.Section> sections, List<Integer> imageIds) {
+    public GridData(List<SectionAdapter.Section> sections, List<Integer> imageIds, String message) {
         this.sections = sections;
         this.imageIds = imageIds;
+        this.message = message;
     }
 
     public List<SectionAdapter.Section> getSections() {
@@ -27,5 +29,13 @@ public class GridData {
 
     public void setImageIds(List<Integer> imageIds) {
         this.imageIds = imageIds;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -32,14 +32,6 @@ public class SliderFragment extends Fragment {
     private List<Integer> imageList;
     private Integer position;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_slider, container, false);
-        ButterKnife.bind(this, inflate);
-        return inflate;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +40,14 @@ public class SliderFragment extends Fragment {
             imageList = bundle.getIntegerArrayList("images");
             position = bundle.getInt("position");
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.fragment_slider, container, false);
+        ButterKnife.bind(this, inflate);
+        return inflate;
     }
 
     @Override

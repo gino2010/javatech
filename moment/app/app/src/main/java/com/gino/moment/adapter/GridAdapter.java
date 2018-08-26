@@ -47,7 +47,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
 
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, final int position) {
-        (new Picasso.Builder(mContext).downloader(Base64HttpClient.build(mContext).getOkHttp3Downloader())).build()
+        (new Picasso.Builder(mContext).downloader(Base64HttpClient.build().getOkHttp3Downloader())).build()
                 .load(momentService.getImageAddress(mItems.get(position)))
                 .placeholder(R.drawable.loader)
                 .into(holder.imageView);

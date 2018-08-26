@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.gino.moment.adapter.GridAdapter;
 import com.gino.moment.adapter.SectionAdapter;
@@ -30,6 +32,8 @@ public class MainActivityFragment extends Fragment {
 
     @BindView(R.id.rv_image)
     RecyclerView recyclerView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private GridAdapter gridAdapter;
     private SectionAdapter mSectionedAdapter;
@@ -85,6 +89,10 @@ public class MainActivityFragment extends Fragment {
             gridAdapter.refreshItem(imageIds);
             SectionAdapter.Section[] sectionArray = new SectionAdapter.Section[sections.size()];
             mSectionedAdapter.setSections(sections.toArray(sectionArray));
+            progressBar.setVisibility(View.GONE);
+            if (gridData.getMessage() != null) {
+                Toast.makeText(getContext(), gridData.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

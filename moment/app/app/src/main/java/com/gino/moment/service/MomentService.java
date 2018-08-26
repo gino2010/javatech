@@ -43,6 +43,7 @@ public class MomentService {
     public GridData getUserImages() {
         List<SectionAdapter.Section> sectionList = new ArrayList<>();
         List<Integer> imageList = new ArrayList<>();
+        String message = null;
 
         if (status) {
             Request request = new Request.Builder().url(address + "user_image").build();
@@ -65,13 +66,15 @@ public class MomentService {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    message = e.getMessage();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                message = e.getMessage();
             }
         }
 
-        return new GridData(sectionList, imageList);
+        return new GridData(sectionList, imageList, message);
     }
 
     public String getImageAddress(Integer id) {

@@ -41,7 +41,7 @@ public class SliderAdapter extends PagerAdapter {
         ImageView imageView;
         imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        (new Picasso.Builder(context).downloader(Base64HttpClient.build(context).getOkHttp3Downloader())).build()
+        (new Picasso.Builder(context).downloader(Base64HttpClient.build().getOkHttp3Downloader())).build()
                 .load(momentService.getImageAddress(imageIds.get(position)))
                 .placeholder(R.drawable.loader)
                 .into(imageView);
