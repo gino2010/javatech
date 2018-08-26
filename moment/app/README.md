@@ -37,4 +37,10 @@ If I implement this project, I definitely don't use this tech architecture
 
 There is still a little different between app layout and design layout. I need to study more.
 
-优化图片缓存减少网络请求
+由于使用Base64的图片传输方式，所以重新定义了Picasso的Downloader，便于Base64解码。
+
+Due to the use of Base64's image format, I redefined Picasso's Downloader to facilitate Base64 decoding.
+
+之所以这样，可能是因为出题者就想考验相关技术
+
+The reason for this may be because the examiner wants to examine the relevant technology.
