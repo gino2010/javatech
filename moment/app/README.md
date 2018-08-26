@@ -44,3 +44,5 @@ Due to the use of Base64's image format, I redefined Picasso's Downloader to fac
 之所以这样，可能是因为出题者就想考验相关技术
 
 The reason for this may be because the examiner wants to examine the relevant technology.
+
+screenshot目录中有截图
