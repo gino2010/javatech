@@ -26,3 +26,7 @@ It's easy to write server. I don't write web-page usually, but I feel good witho
 App写的有点吃力，好久不写android app相关写法都生疏了
 
 It's hard to write App. I haven't written android app for long time, I forgot related tech.
+
+详情请参见对应子目录中的相关描述
+
+For details, please refer to the related description in the corresponding subdirectory.
