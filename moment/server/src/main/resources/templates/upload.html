@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><input type="file" name="image" accept="image/jpeg"/></td>
+                <td><input type="file" name="image" accept="image/*"/></td>
             </tr>
             <tr>
                 <td></td>
@@ -53,7 +53,7 @@
     <tr th:each="entity : ${entities}">
         <td th:text="${entity.getId()}"></td>
         <td th:text="${entity.getUserId()}"></td>
-        <td><img th:src="@{'data:image/jpeg;base64,'+${entity.generateBase64Image()}}" width="350" height="200"/></td>
+        <td><img th:src="@{'data:image/*;base64,'+${entity.generateBase64Image()}}" width="350" height="200"/></td>
         <td>
             <button style="width: 50px" th:onclick="|myedit(${entity.getId()}, '${entity.getUserId()}')|">Edit</button>
             <form style="margin-bottom: 0" th:action="'/del/'+${entity.getId()}" method='post'><input
