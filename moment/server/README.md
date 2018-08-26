@@ -29,7 +29,10 @@ Some of the content in this project is not the main contact area of my current w
 - postman 6.2.5
 
 ### Note
+毕竟本人不擅长写Web页面，所以：
+- 前端未使用jQuery等js包，尽可能简化相关实现并使用纯JavaScript，无Ajax
+- 未使用BootStrap等相关CSS包，界面简单
 
-测试版本, 后续可能还会调整
-
-beta version, maybe refine later.
+After all, I am not good at writing web pages, so:
+- The front end does not use js packages such as jQuery, simplify the implementation as much as possible and use plain JavaScript, no Ajax
+- No relevant CSS packages such as BootStrap are used, the layout is simple

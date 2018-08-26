@@ -5,7 +5,7 @@
 </div>
 
 <div>
-    <form id="image" method="POST" enctype="multipart/form-data" action="/">
+    <form id="image" method="POST" enctype="multipart/form-data" action="/" onsubmit="return changeAction(this)">
         <table>
             <tr>
                 <td>ID</td>
@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <td>User Id</td>
-                <td><input type="text" name="user_id" maxlength="10"/></td>
+                <td><input type="text" name="user_id" maxlength="10" required/></td>
             </tr>
             <tr>
                 <td>Image:</td>
@@ -27,6 +27,17 @@
             </tr>
         </table>
     </form>
+</div>
+
+<div>
+    <span>User Id: </span>
+    <select id="select" th:name="*{current_user}">
+        <option value=""> --</option>
+        <option th:each="user : ${users}"
+                th:value="${user}"
+                th:utext="${user}"
+                th:selected="${current_user == user}"/>
+    </select>
 </div>
 
 <table>
@@ -55,6 +66,13 @@
 </body>
 
 <script>
+    (function () {
+        var select = document.getElementById("select");
+        select.addEventListener("change", function () {
+            window.location.replace("http://" + window.location.host + "/" + select.options[select.selectedIndex].value);
+        });
+    })();
+
     function myedit(id, userId) {
         console.log("edit");
         document.getElementsByName("id")[0].value = id;
@@ -69,6 +87,17 @@
             document.getElementById(id).innerText = "";
         }
         document.getElementById("image").reset();
+    }
+
+    function changeAction(form) {
+        var select = document.getElementById("select");
+        form.action = "/" + select.options[select.selectedIndex].value;
+        if (form["id"].value === "" && form["image"].value === "") {
+            alert("id and image can not be empty at the same time!");
+            return false;
+        } else {
+            return true;
+        }
     }
 </script>
 </html>

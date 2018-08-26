@@ -43,6 +43,10 @@ public class ImageService {
         return imageRepository.findAll();
     }
 
+    public List<ImageEntity> getImagesByUser(String userId) {
+        return imageRepository.getByUserId(userId);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteImageById(Integer id) {
         imageRepository.deleteById(id);
@@ -61,5 +65,9 @@ public class ImageService {
 
     public ImageEntity getImageById(Integer id) {
         return imageRepository.getOne(id);
+    }
+
+    public List<String> getUserId() {
+        return imageRepository.getUserIds();
     }
 }

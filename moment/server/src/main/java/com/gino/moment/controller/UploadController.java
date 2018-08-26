@@ -1,6 +1,5 @@
 package com.gino.moment.controller;
 
-import com.gino.moment.entity.ImageEntity;
 import com.gino.moment.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author gino
@@ -32,14 +30,38 @@ public class UploadController {
 
     @GetMapping("/")
     public String listUploadedImages(Model model) {
-        List<ImageEntity> entityList = imageService.getImages();
-        model.addAttribute("entities", entityList);
+        model.addAttribute("entities", imageService.getImages());
+        model.addAttribute("users", imageService.getUserId());
+        model.addAttribute("current_user", "");
+        return "upload";
+    }
+
+    @GetMapping("/{userId}")
+    public String listUploadedImages(@PathVariable("userId") String userId, Model model) {
+        model.addAttribute("entities", imageService.getImagesByUser(userId));
+        model.addAttribute("users", imageService.getUserId());
+        model.addAttribute("current_user", userId);
         return "upload";
     }
 
     @PostMapping("/")
-    public String uploadImage(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "user_id", required = false) String userId,
+    public String uploadImage(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "user_id") String userId,
                               @RequestParam(value = "image", required = false) MultipartFile image, RedirectAttributes redirectAttributes) {
+        upload(id, userId, image, redirectAttributes);
+        return "redirect:/";
+    }
+
+    @PostMapping("/{userId}")
+    public String uploadImage(@RequestParam(value = "id", required = false) Integer id,
+                              @RequestParam(value = "user_id") String userId,
+                              @RequestParam(value = "image", required = false) MultipartFile image,
+                              @PathVariable("userId") String selectUserId,
+                              RedirectAttributes redirectAttributes) {
+        upload(id, userId, image, redirectAttributes);
+        return "redirect:/" + selectUserId;
+    }
+
+    private void upload(Integer id, String userId, MultipartFile image, RedirectAttributes redirectAttributes) {
         try {
             Integer newId = imageService.saveImage(id, userId, image.getBytes());
             redirectAttributes.addFlashAttribute("message",
@@ -49,8 +71,6 @@ public class UploadController {
             redirectAttributes.addFlashAttribute("message",
                     id == null ? "You save new image failed" : String.format("You update image #%s failed", id));
         }
-
-        return "redirect:/";
     }
 
     @PostMapping("/del/{id}")
