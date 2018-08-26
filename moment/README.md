@@ -19,7 +19,7 @@ App requirement
 
 Two projects in this directory, one is spring server, other is android app.
 
-Server写还算顺利，虽然平时不是前端页面，但是还好没有什么样式
+Server写还算顺利，虽然平时不写前端页面，但是还好没有什么样式
 
 It's easy to write server. I don't write web-page usually, but I feel good without css.
 
