@@ -30,6 +30,7 @@ public class SliderFragment extends Fragment {
     Toolbar toolbar;
 
     private List<Integer> imageList;
+    private Integer position;
 
     @Nullable
     @Override
@@ -45,6 +46,7 @@ public class SliderFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             imageList = bundle.getIntegerArrayList("images");
+            position = bundle.getInt("position");
         }
     }
 
@@ -63,6 +65,7 @@ public class SliderFragment extends Fragment {
             }
         });
         viewPager.setAdapter(new SliderAdapter(imageList, getContext()));
+        viewPager.setCurrentItem(position);
         circleIndicator.setViewPager(viewPager);
     }
 

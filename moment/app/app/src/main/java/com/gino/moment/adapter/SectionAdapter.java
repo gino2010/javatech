@@ -107,24 +107,22 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (isSectionHeaderPosition(position)) {
             ((SectionViewHolder) sectionViewHolder).title.setText(mSections.get(position).title);
         } else {
-            mGridAdapter.onBindViewHolder(sectionViewHolder, sectionedPositionToPosition(position));
+            final int itemPosition = sectionedPositionToPosition(position);
+            mGridAdapter.onBindViewHolder(sectionViewHolder, itemPosition);
 
             sectionViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println(position);
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
                     SliderFragment sliderFragment = new SliderFragment();
                     Bundle bundle = new Bundle();
 
-                    // TODO: 2018/8/26 replace with images of user
-                    ArrayList<Integer> dummy = new ArrayList<>();
-                    dummy.add(1);
+                    TempData tempData = positionsInSection(itemPosition);
+                    // get images of user
+                    ArrayList<Integer> integers = new ArrayList<>(tempData.getImages());
 
-                    List<Integer> integers = ((GridAdapter) mGridAdapter).getmItems();
-
-
-                    bundle.putIntegerArrayList("images", dummy);
+                    bundle.putIntegerArrayList("images", integers);
+                    bundle.putInt("position", tempData.getPosition());
                     sliderFragment.setArguments(bundle);
                     transaction.replace(R.id.fragment_container, sliderFragment)
                             .addToBackStack(null)
@@ -190,7 +188,29 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return position + offset;
     }
 
-    public int sectionedPositionToPosition(int sectionedPosition) {
+    private TempData positionsInSection(int position) {
+        int sectionId = 0;
+        int startPosition;
+        int endPosition;
+        for (int i = 0; i < mSections.size(); i++) {
+            if (mSections.valueAt(i).firstPosition > position) {
+                sectionId = i - 1;
+                break;
+            }
+            sectionId = i;
+        }
+        startPosition = mSections.valueAt(sectionId).firstPosition;
+        if (mSections.size() > sectionId + 1) {
+            endPosition = mSections.valueAt(sectionId + 1).firstPosition;
+        } else {
+            endPosition = mGridAdapter.getItemCount();
+        }
+
+        List<Integer> itemList = ((GridAdapter) mGridAdapter).getmItems().subList(startPosition, endPosition);
+        return new TempData(itemList, position - startPosition);
+    }
+
+    private int sectionedPositionToPosition(int sectionedPosition) {
         if (isSectionHeaderPosition(sectionedPosition)) {
             return RecyclerView.NO_POSITION;
         }
@@ -205,7 +225,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return sectionedPosition + offset;
     }
 
-    public boolean isSectionHeaderPosition(int position) {
+    private boolean isSectionHeaderPosition(int position) {
         return mSections.get(position) != null;
     }
 
@@ -220,6 +240,32 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         return (mValid ? mGridAdapter.getItemCount() + mSections.size() : 0);
+    }
+
+    private class TempData {
+        List<Integer> images;
+        Integer position;
+
+        private TempData(List<Integer> images, Integer position) {
+            this.images = images;
+            this.position = position;
+        }
+
+        public List<Integer> getImages() {
+            return images;
+        }
+
+        public void setImages(List<Integer> images) {
+            this.images = images;
+        }
+
+        public Integer getPosition() {
+            return position;
+        }
+
+        public void setPosition(Integer position) {
+            this.position = position;
+        }
     }
 
 }
