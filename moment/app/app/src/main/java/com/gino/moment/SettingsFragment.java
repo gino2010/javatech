@@ -50,10 +50,10 @@ public class SettingsFragment extends Fragment {
 
         toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
+        toolbar.setTitle(R.string.action_settings);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toolbar.setNavigationIcon(null);
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }

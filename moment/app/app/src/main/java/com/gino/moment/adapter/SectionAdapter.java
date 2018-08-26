@@ -123,6 +123,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     bundle.putIntegerArrayList("images", integers);
                     bundle.putInt("position", tempData.getPosition());
+                    bundle.putCharSequence("section", tempData.getSectionName());
                     sliderFragment.setArguments(bundle);
                     transaction.replace(R.id.fragment_container, sliderFragment)
                             .addToBackStack(null)
@@ -207,7 +208,7 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         List<Integer> itemList = ((GridAdapter) mGridAdapter).getmItems().subList(startPosition, endPosition);
-        return new TempData(itemList, position - startPosition);
+        return new TempData(itemList, position - startPosition, mSections.valueAt(sectionId).title);
     }
 
     private int sectionedPositionToPosition(int sectionedPosition) {
@@ -245,10 +246,12 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private class TempData {
         List<Integer> images;
         Integer position;
+        CharSequence sectionName;
 
-        private TempData(List<Integer> images, Integer position) {
+        private TempData(List<Integer> images, Integer position, CharSequence sectionName) {
             this.images = images;
             this.position = position;
+            this.sectionName = sectionName;
         }
 
         public List<Integer> getImages() {
@@ -265,6 +268,14 @@ public class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void setPosition(Integer position) {
             this.position = position;
+        }
+
+        public CharSequence getSectionName() {
+            return sectionName;
+        }
+
+        public void setSectionName(CharSequence sectionName) {
+            this.sectionName = sectionName;
         }
     }
 

@@ -31,6 +31,7 @@ public class SliderFragment extends Fragment {
 
     private List<Integer> imageList;
     private Integer position;
+    private CharSequence section;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SliderFragment extends Fragment {
         if (bundle != null) {
             imageList = bundle.getIntegerArrayList("images");
             position = bundle.getInt("position");
+            section = bundle.getCharSequence("section");
         }
     }
 
@@ -55,10 +57,10 @@ public class SliderFragment extends Fragment {
         super.onStart();
         toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
+        toolbar.setTitle(section);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toolbar.setNavigationIcon(null);
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }

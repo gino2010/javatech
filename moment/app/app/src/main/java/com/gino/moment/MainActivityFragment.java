@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public class MainActivityFragment extends Fragment implements SwipeRefreshLayout
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    Toolbar toolbar;
+
     private GridAdapter gridAdapter;
     private SectionAdapter mSectionedAdapter;
 
@@ -55,6 +58,9 @@ public class MainActivityFragment extends Fragment implements SwipeRefreshLayout
         View inflate = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, inflate);
         swipeRefreshLayout.setOnRefreshListener(this);
+        toolbar = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
+        toolbar.setTitle(R.string.app_name);
         return inflate;
     }
 
