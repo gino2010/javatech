@@ -2,9 +2,9 @@
 
 Android project for interview exam.
 
-好久不写android程序，写的有点吃力。很多技术认知还停留存在4年多前的样子，正好更新一下。
+好久不写android程序。很多技术认知还停留存在4年多前的样子，正好更新一下。
 
-I haven't written the android program for a long time, and it's a bit hard to write. A lot of technical cognition still stays like it was more than four years ago. Just upgrade it.
+I haven't written the android program for a long time. A lot of technical cognition still stays like it was more than four years ago. Just upgrade it.
 
 程序后端要求图片binary方式存入数据库，然后前端通过请求HTTP接口获得图片数据，这个感觉好传统的处理方式，不太合理。
 
