@@ -8,7 +8,7 @@ This project is a server application for interview exam
 
 Some of the content in this project is not the main contact area of my current work, such as HTML pages, I basically do not write. I mainly write middle and background services. In addition to business logic, I often write restful interfaces, rpc calls, MQ, etc.
 
-### requirements of server
+### Requirements
 
 - Can Upload the images into DB;
 - Can config the user id
