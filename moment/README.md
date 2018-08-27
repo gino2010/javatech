@@ -23,9 +23,9 @@ Server写还算顺利，虽然平时不写前端页面，但是还好没有什�
 
 It's easy to write server. I don't write web-page usually, but I feel good without css.
 
-App写的有点吃力，好久不写android app相关写法都生疏了
+好久不写android app相关写法都生疏了
 
-It's hard to write App. I haven't written android app for long time, I forgot related tech.
+I haven't written android app for long time, I forgot related tech.
 
 详情请参见对应子目录中的相关描述
 
