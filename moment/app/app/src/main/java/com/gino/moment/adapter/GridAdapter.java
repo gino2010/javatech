@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.gino.moment.network.Base64HttpClient;
 import com.gino.moment.R;
+import com.gino.moment.network.Base64HttpClient;
 import com.gino.moment.service.MomentService;
 import com.squareup.picasso.Picasso;
 
@@ -64,6 +64,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
     }
 
     public void refreshItem(List<Integer> items) {
+        mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();
     }
