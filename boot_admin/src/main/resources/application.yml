@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: BootAdmin
+  profiles:
+    active: dev
+# only for actuator
+management:
+  server:
+    port: 8008
+# only for http server
+server:
+  port: 8009
+# Logging
+logging:
+  #  path: logs either file or path, not both
+  file: logs/bootadmin.log
+  level:
+    # root logging level or specific for some package
+    root: warn
+    com.gino: info

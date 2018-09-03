@@ -1,0 +1,9 @@
+server:
+  email: prod@gino.com
+  cluster:
+  - ip: 192.168.0.1
+    path: /app1
+  - ip: 192.168.0.2
+    path: /app2
+  - ip: 192.168.0.3
+    path: /app3
