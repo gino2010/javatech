@@ -87,6 +87,7 @@ public class HelloWorldServerTls {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        System.setProperty("java.net.preferIPv4Stack", "true");
 
         if (args.length < 4 || args.length > 5) {
             System.out.println(
