@@ -1,4 +1,4 @@
-#Boot Admin
+# Boot Admin
 This project is for spring boot admin and try some features of spring boot
 
 Some features are funny.
