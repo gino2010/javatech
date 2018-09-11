@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: transaction
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo?useSSL=false
+    username: root
+    password: root
+  jpa:
+    show-sql: true
