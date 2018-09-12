@@ -22,7 +22,6 @@ public interface TMoneyService {
     @Transactional(rollbackFor = Exception.class)
     void updateMoneyWithLock();
 
-    // 这样就出错了
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     void selectMoney();
 }
