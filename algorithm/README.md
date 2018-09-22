@@ -4,7 +4,6 @@
 
 Algorithm, how much would you master as a professional programmer?
 
-
 此工程每个文件将实现一个简单的、基础的算法，目的就是巩固学习一下，打实基础。
 
 Each file of this project will implement a simple, basic algorithm, the purpose is to consolidate and learn.
@@ -13,10 +12,13 @@ Each file of this project will implement a simple, basic algorithm, the purpose 
 
 Algorithms are also a way of thinking, and this way of thinking can even be extended to many non-computer fields.
 
-# note
+### list
+- Bucket Sort 
+
+### note
 由于最近项目的原因，没有时间做比较大的完整系统的实验，所以用算法这个工程练练手。
 
-Due to the recent project reasons, there is no time to do a relatively large complete application experiment, so use the algorithm to practice the hand.
+Due to the recent project reasons, there is no time to do a relatively large complete application experiment, so use this algorithm project to practice the hand.
 
 其实算法问题我还是喜欢python书写，所以时间允许的话我会在python实现一份，或者某些算法只在python里实现。
 
