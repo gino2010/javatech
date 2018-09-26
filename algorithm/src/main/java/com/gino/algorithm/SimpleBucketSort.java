@@ -3,7 +3,7 @@ package com.gino.algorithm;
 import java.util.Scanner;
 
 /**
- * Bucket Sort 桶排序
+ * Simple Bucket Sort 桶排序 简易版
  *
  * @author gino
  * Created on 2018/9/22
@@ -16,7 +16,7 @@ import java.util.Scanner;
  * <p>
  * for example: 1,2,9,1,5,7,6,3,4,8,8,2,3
  */
-public class BucketSort {
+public class SimpleBucketSort {
     private static int[] bucket = new int[11];
     private static int[] data;
 
