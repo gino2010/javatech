@@ -15,8 +15,8 @@ public class BubbleSort {
     private static int[] data;
 
     private static void sort() {
-        for (int i = 0; i < data.length - 2; i++) {
-            for (int j = 0; j < data.length - 1 - i; j++) {
+        for (int i = 1; i < data.length - 1; i++) {
+            for (int j = 0; j < data.length - i; j++) {
                 if (data[j] < data[j + 1]) {
                     // swap data
                     int temp = data[j];
