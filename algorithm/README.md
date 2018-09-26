@@ -14,6 +14,7 @@ Algorithms are also a way of thinking, and this way of thinking can even be exte
 
 ### list
 - Simple Bucket Sort 
+- Bubble Sort
 
 ### note
 由于最近项目的原因，没有时间做比较大的完整系统的实验，所以用算法这个工程练练手。
