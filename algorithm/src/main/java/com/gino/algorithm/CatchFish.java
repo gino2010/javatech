@@ -35,7 +35,7 @@ public class CatchFish {
         System.out.println(String.format("How many players? (No more than %s) : ", POKER_CARD_NUM));
         this.players = scanner.nextInt();
         if (this.players > POKER_CARD_NUM) {
-            System.out.println("More players, game can not be start!");
+            System.out.println("Too many players, game can not be start!");
             return false;
         }
 
@@ -121,7 +121,7 @@ public class CatchFish {
         if (catchFish.initGame()) {
             catchFish.dealCard();
             // 玩家手中的牌输出
-            System.out.println("output player's cards: ");
+            System.out.println("Output player's cards: ");
             for (ArrayList<Integer> temp : catchFish.playerQueues) {
                 for (Integer i : temp) {
                     System.out.print(i + " ");
