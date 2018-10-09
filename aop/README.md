@@ -20,3 +20,9 @@ Aspect Oriented Programming 面向切面编程
 - mac os x
 - idea 2018
 - JDK 1.8
+
+### Note
+实验代理增强方式
+实验注解切面方式
+
+不实验xml配置方式
