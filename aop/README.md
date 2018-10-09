@@ -15,6 +15,7 @@ Aspect Oriented Programming 面向切面编程
 但是，无论怎样，官方文档还是最有参考价值的:
 
 [Spring AOP](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#aop-api)
+[参考的blog](https://www.cnblogs.com/zuidongfeng/p/8707694.html)
 
 ### Environment
 - mac os x
