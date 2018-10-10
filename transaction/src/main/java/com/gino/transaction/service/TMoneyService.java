@@ -15,7 +15,7 @@ public interface TMoneyService {
 
     void clearAll();
 
-
+    // 穿行隔离级别可以避免事物交叉
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     void updateMoney();
 
@@ -24,4 +24,10 @@ public interface TMoneyService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     void selectMoney();
+
+    @Transactional(rollbackFor = Exception.class)
+    void transferMoney(int from, int to);
+
+    @Transactional(rollbackFor = Exception.class)
+    void transferMoneyWithSQL(int from, int to, int qty);
 }

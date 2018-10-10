@@ -46,7 +46,7 @@ public class TransactionApplicationTests {
 
     @Test
     public void testMultipleTran() {
-        // 这样只会加1，不是加2，事务交叉了
+        // 非穿行化隔离，这样只会加1，不是加2，事务交叉了
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         Future<?> submit1 = executorService.submit(() -> service.updateMoney());
         Future<?> submit2 = executorService.submit(() -> service.updateMoney());
@@ -62,6 +62,36 @@ public class TransactionApplicationTests {
             } catch (InterruptedException | ExecutionException e1) {
                 e1.printStackTrace();
             }
+        }
+    }
+
+    @Test
+    public void testMultipleTran2() {
+        // 这样只会加1，不是加2，事务交叉了
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        Future<?> submit1 = executorService.submit(() -> service.transferMoney(1, 3));
+        Future<?> submit2 = executorService.submit(() -> service.transferMoney(2, 3));
+
+        try {
+            submit1.get();
+            submit2.get();
+        }catch (Exception e){
+
+        }
+    }
+
+    @Test
+    public void testMultipleTran3() {
+        // 这样只会加1，不是加2，事务交叉了
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        Future<?> submit1 = executorService.submit(() -> service.transferMoneyWithSQL(1, 3, 1));
+        Future<?> submit2 = executorService.submit(() -> service.transferMoneyWithSQL(3, 2, -1));
+
+        try {
+            submit1.get();
+            submit2.get();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -95,13 +125,13 @@ public class TransactionApplicationTests {
     }
 
     @Test
-    public void testSelect(){
+    public void testSelect() {
         service.selectMoney();
     }
 
     @Test
     @Transactional
-    public void testLock(){
+    public void testLock() {
         TMoneyEntity byId = repository.getById(1);
         byId.getId();
     }

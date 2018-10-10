@@ -27,14 +27,14 @@ public class TMoneyServiceImpl implements TMoneyService {
     public void saveWithoutTran() {
         repository.save(new TMoneyEntity(1, BigDecimal.valueOf(100L), "123"));
         repository.save(new TMoneyEntity(2, BigDecimal.valueOf(100L), "456"));
-        repository.save(new TMoneyEntity(3, BigDecimal.valueOf(100L), "123456"));
+        repository.save(new TMoneyEntity(3, BigDecimal.valueOf(100L), "789"));
     }
 
     @Override
     public void saveWithTran() {
         repository.save(new TMoneyEntity(1, BigDecimal.valueOf(100L), "123"));
         repository.save(new TMoneyEntity(2, BigDecimal.valueOf(100L), "456"));
-        repository.save(new TMoneyEntity(3, BigDecimal.valueOf(100L), "123456"));
+        repository.save(new TMoneyEntity(3, BigDecimal.valueOf(100L), "789"));
     }
 
     @Override
@@ -93,5 +93,35 @@ public class TMoneyServiceImpl implements TMoneyService {
         log.info("one {}", one.getMoney().toString());
         log.info("two {}", two.getMoney().toString());
 
+    }
+
+    @Override
+    public void transferMoney(int from, int to) {
+        TMoneyEntity one = repository.getOne(from);
+        TMoneyEntity two = repository.getOne(to);
+        one.setMoney(one.getMoney().subtract(BigDecimal.ONE));
+        two.setMoney(two.getMoney().add(BigDecimal.ONE));
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info("save from:{}", from);
+        repository.save(one);
+        log.info("save to:{}", to);
+        repository.save(two);
+    }
+
+    @Override
+    public void transferMoneyWithSQL(int from, int to, int qty) {
+        repository.updateMoney(from, new BigDecimal(-qty));
+        log.info("from:{}", from);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        repository.updateMoney(to, new BigDecimal(qty));
+        log.info("to:{}", to);
     }
 }
