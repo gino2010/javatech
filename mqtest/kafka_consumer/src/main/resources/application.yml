@@ -2,7 +2,7 @@ spring:
   kafka:
     bootstrap-servers: 192.168.102.47:9092
     consumer:
-      group-id: gino
+      group-id: mygroup
       auto-offset-reset: earliest
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
