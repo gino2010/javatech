@@ -6,8 +6,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Slf4j
+@EnableScheduling
 @SpringBootApplication
 public class ProducerApplication implements CommandLineRunner {
     @Autowired
@@ -20,6 +22,6 @@ public class ProducerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("kafka producer server start...");
-        producer.send("kafka gino test");
+        // producer.send("kafka gino test");
     }
 }

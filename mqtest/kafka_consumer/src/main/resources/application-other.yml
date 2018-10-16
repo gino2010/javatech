@@ -2,8 +2,8 @@ spring:
   kafka:
     bootstrap-servers: 192.168.102.47:9091,192.168.102.47:9092,192.168.102.47:9093
     consumer:
-      group-id: mygroup
-      auto-offset-reset: earliest
+      group-id: myother
+      auto-offset-reset: latest
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 app:
