@@ -6,3 +6,4 @@ spring:
 
 app:
   queue: gino.queue
+  topic: gino.topic
