@@ -6,5 +6,9 @@ spring:
       auto-offset-reset: earliest
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+# ack 提交方式，直接影响刷盘，建议批次，不建议逐笔. 使用manual时，需要关闭auto commit
+      enable-auto-commit: false
+    listener:
+      ack-mode: manual
 app:
   topic: gino.topic
