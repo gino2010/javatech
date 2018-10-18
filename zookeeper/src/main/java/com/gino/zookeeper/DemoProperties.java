@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Created on 2018/10/17
  */
 @Component
-@ConfigurationProperties("demo")
+@ConfigurationProperties("demopro")
 public class DemoProperties {
     private String key;
     private String value;

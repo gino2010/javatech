@@ -45,11 +45,12 @@ public class ZookeeperApplication implements CommandLineRunner {
         byte[] bytes = curatorFramework.getData().forPath("/test");
         log.info("path test:{}", new String(bytes));
 
+        // set one value
         log.info("zc from zookeeper configuration:{}", zc);
 
-        // not finished
-        demoProperties.setKey("key test");
-        demoProperties.setValue("value test");
+        // set one object
+        log.info("demo properties key: {}", demoProperties.getKey());
+        log.info("demo properties value: {}", demoProperties.getValue());
 
         while (true) {
 
