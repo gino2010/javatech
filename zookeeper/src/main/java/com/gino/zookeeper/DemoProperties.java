@@ -1,6 +1,7 @@
 package com.gino.zookeeper;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
  * Created on 2018/10/17
  */
 @Component
+@RefreshScope
 @ConfigurationProperties("demopro")
 public class DemoProperties {
     private String key;

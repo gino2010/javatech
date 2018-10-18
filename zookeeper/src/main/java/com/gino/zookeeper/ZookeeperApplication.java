@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -37,7 +40,7 @@ public class ZookeeperApplication implements CommandLineRunner {
         log.info("zookeeper application server start...");
         curatorFramework.blockUntilConnected();
         Stat stat = curatorFramework.checkExists().forPath("/test");
-        if(stat==null) {
+        if (stat == null) {
             curatorFramework.create().creatingParentsIfNeeded()
                     .withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)
                     .forPath("/test", "data".getBytes());
@@ -48,12 +51,20 @@ public class ZookeeperApplication implements CommandLineRunner {
         // set one value
         log.info("zc from zookeeper configuration:{}", zc);
 
-        // set one object
+        // set one object, you can change it after you start server
         log.info("demo properties key: {}", demoProperties.getKey());
         log.info("demo properties value: {}", demoProperties.getValue());
 
-        while (true) {
-
-        }
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit((Runnable) () -> {
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                log.info("demo properties key: {}", demoProperties.getKey());
+            }
+        });
     }
 }
