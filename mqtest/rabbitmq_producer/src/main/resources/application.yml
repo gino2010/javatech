@@ -6,3 +6,6 @@ spring:
 
 app:
   queue: gino.queue
+  exchange: gino.broadcast
+  broadone: gino.broadone
+  broadtwo: gino.broadtwo

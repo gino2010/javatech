@@ -13,6 +13,21 @@ import org.springframework.stereotype.Component;
 public class Consumer {
     @RabbitListener(queues = "${app.queue}")
     public void recevie(String message) {
-        log.info("consumer receive: {}", message);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info("consumer receive queue: {}", message);
+    }
+
+    @RabbitListener(queues = "${app.broadone}")
+    public void recevieOne(String message) {
+        log.info("consumer receive broadcast one: {}", message);
+    }
+
+    @RabbitListener(queues = "${app.broadtwo}")
+    public void recevieTwo(String message) {
+        log.info("consumer receive broadcast two: {}", message);
     }
 }
