@@ -1,0 +1,46 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+        camelVersion = '2.23.0'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.gino'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    spring, replace tomcat with undertow
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
+    implementation('org.springframework.boot:spring-boot-starter-undertow')
+//    camel
+    implementation("org.apache.camel:camel-spring-boot-starter:${camelVersion}")
+    implementation("org.apache.camel:camel-stream-starter:${camelVersion}")
+//    add these packages is only for Java 11, if you use java 8, please remove these packages
+//    java 11 removed jaxb-api, need this for fixing error
+    implementation('javax.xml.bind:jaxb-api:2.3.0')
+//    java 11 remove javax activation, need this for fixing warning
+    implementation('com.sun.activation:javax.activation:1.2.0')
+//    others
+    compileOnly('org.projectlombok:lombok')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.apache.camel:camel-test-spring:2.23.0')
+}

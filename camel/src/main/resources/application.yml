@@ -1,0 +1,25 @@
+camel:
+  springboot:
+    name: CamelDemo
+
+greeting: Hello World
+
+timer:
+  period: 2000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [info, health, camelroutes]
+  endpoint:
+    health:
+      show-details: always
+    camelroutes:
+      enabled: true
+      read-only: true
+  info:
+    camel:
+      enabled: false
+
+
