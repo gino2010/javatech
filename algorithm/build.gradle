@@ -12,5 +12,7 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    implementation group: 'com.google.inject', name: 'guice', version: '5.0.1'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
